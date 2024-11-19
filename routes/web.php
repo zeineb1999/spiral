@@ -9,9 +9,11 @@ Route::get('/', function () {
 });
 
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
 Route::get('/message', function () {
     return response()->json(['message' => 'Hello from Laravel API!']);
 });
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
