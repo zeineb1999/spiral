@@ -1,9 +1,7 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <title>Test Email</title>
-</head>
 <body>
-    <h1>This is a test email.</h1>
+    <h1>Email avec Pièces Jointes</h1>
+    <p>{{ $data }}</p>
+    <p>Vous trouverez en pièce jointe une photo et un fichier PDF.</p>
 </body>
 </html>
