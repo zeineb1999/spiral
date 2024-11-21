@@ -12,20 +12,11 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Styles de la sidebar */
-        nav {
-            position: fixed; /* Sidebar fixe */
-            width: 250px; /* Largeur de la sidebar */
-            height: 100vh; /* Hauteur de la sidebar */
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+    
 
         /* Contenu principal (formulaire) */
         .content {
-            margin-left: 260px; /* Décale le contenu pour éviter la superposition avec la sidebar */
+            margin-left: 300px; /* Décale le contenu pour éviter la superposition avec la sidebar */
             padding: 20px;
             background-color: #f9f9f9;
             width: calc(100% - 260px); /* Ajuste la largeur du contenu */
@@ -104,15 +95,19 @@
         @endif
 
         <!-- Formulaire d'upload -->
-        <form action="{{ route('sendEmail') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('send-email') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div>
-                <label for="photo">Photo (JPG, PNG)</label>
-                <input type="file" name="photo" id="photo" accept="image/*">
+                <label for="images">Photos (JPG, PNG)</label>
+                <input type="file" name="images[]" id="images" accept="image/*" multiple>
             </div>
             <div>
-                <label for="pdf">PDF</label>
-                <input type="file" name="pdf" id="pdf" accept="application/pdf">
+                <label for="pdfs">PDFs</label>
+                <input type="file" name="pdfs[]" id="pdfs" accept="application/pdf" multiple>
+            </div>
+            <div>
+                <label for="email">Email du destinataire</label>
+                <input type="email" name="email" id="email" required placeholder="example@email.com">
             </div>
             <button type="submit">Envoyer</button>
         </form>

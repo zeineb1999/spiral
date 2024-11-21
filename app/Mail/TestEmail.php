@@ -3,42 +3,32 @@ namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class TestEmail extends Mailable
 {
     use SerializesModels;
 
-    // Données pour l'email
     public $data;
+    public $attachments;
 
-    /**
-     * Créer une nouvelle instance de message.
-     *
-     * @param string $data
-     * @return void
-     */
-    public function __construct($data)
+    public function __construct($data, $attachments = [])
     {
         $this->data = $data;
+        $this->attachments = $attachments;
     }
 
-    /**
-     * Construire le message.
-     *
-     * @return $this
-     */
     public function build()
     {
-        // Construction de l'email avec un sujet et une vue
-        return $this->subject('Email avec Pièces Jointes')
-                    ->view('emails.test')  // Vue de l'email (tu peux la personnaliser)
-                    ->with([
-                        'data' => $this->data,
-                    ])
-                    // Ajouter une photo en pièce jointe
-                    ->attach(public_path('images/testpng.png'))  // Chemin relatif depuis le dossier public
-                    // Ajouter un fichier PDF en pièce jointe
-                    ->attach(public_path('pdfs/pdftest.pdf'));  // Chemin relatif depuis le dossier public
+        dd("testEmail",$this->attachments);
+        $email = $this->subject('Email avec Pièces Jointes')
+                      ->view('emails.test')
+                      ->with(['data' => $this->data]);
+
+        // Ajouter les pièces jointes
+        foreach ($this->attachments as $file) {
+            $email->attach(storage_path('app/public/' . $file));
+        }
+
+        return $email;
     }
 }

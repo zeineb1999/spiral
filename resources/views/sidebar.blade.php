@@ -25,16 +25,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons/css/boxicons.min.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
+
     <style>
         body {
-            display: flex;
-            margin: 0;
-            height: 100vh;
-            background-color: #f8f9fa;
+            font-family: "Open Sans", sans-serif;
+            color: #272829;
         }
 
+        a {
+            color: #149ddd;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #37b3ed;
+            text-decoration: none;
+        }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+            font-family: "Raleway", sans-serif;
+        }
+
+        
+
         .sidebar {
-            width: 250px;
+            width: 300px;
             background-color: #0d1117;
             color: white;
             padding: 20px;
@@ -108,7 +129,7 @@
 
         h4 {
             color: white;
-            text-align: center;
+            
             margin-bottom: 20px;
         }
 
@@ -147,46 +168,250 @@
         .header .social-links a i {
             font-size: 16px; /* Taille plus petite de l'icône */
         }
+                
+        /*--------------------------------------------------------------
+        # Header
+        --------------------------------------------------------------*/
+        #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 300px;
+        transition: all ease-in-out 0.5s;
+        z-index: 9997;
+        transition: all 0.5s;
+        padding: 0 15px;
+        background: #040b14;
+        overflow-y: auto;
+        }
 
-      
+        #header .profile img {
+        margin: 15px auto;
+        display: block;
+        width: 120px;
+        border: 8px solid #2c2f3f;
+        }
+
+        #header .profile h1 {
+        font-size: 24px;
+        margin: 0;
+        padding: 0;
+        font-weight: 600;
+        -moz-text-align-last: center;
+        text-align-last: center;
+        font-family: "Poppins", sans-serif;
+        }
+
+        #header .profile h1 a,
+        #header .profile h1 a:hover {
+        color: #fff;
+        text-decoration: none;
+        }
+
+        #header .profile .social-links a {
+        font-size: 18px;
+        display: inline-block;
+        background: #212431;
+        color: #fff;
+        line-height: 1;
+        padding: 8px 0;
+        margin-right: 4px;
+        border-radius: 50%;
+        text-align: center;
+        width: 36px;
+        height: 36px;
+        transition: 0.3s;
+        }
+
+        #header .profile .social-links a:hover {
+        background: #149ddd;
+        color: #fff;
+        text-decoration: none;
+        }
+
+        #main {
+        margin-left: 300px;
+        }
+
+        .container,
+        .container-fluid {
+        padding-left: 30px;
+        padding-right: 30px;
+        }
+
+        @media (max-width: 1199px) {
+        #header {
+            left: -300px;
+        }
+
+        #main {
+            margin-left: 0;
+        }
+
+        .container,
+        .container-fluid {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+        }
+        
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/* Desktop Navigation */
+.nav-menu {
+  padding: 30px 0 0 0;
+}
+
+.nav-menu * {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-menu>ul>li {
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav-menu a,
+.nav-menu a:focus {
+  display: flex;
+  align-items: center;
+  color: #a8a9b4;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  transition: 0.3s;
+  font-size: 15px;
+}
+
+.nav-menu a i,
+.nav-menu a:focus i {
+  font-size: 24px;
+  padding-right: 8px;
+  color: #6f7180;
+}
+
+.nav-menu a:hover,
+.nav-menu .active,
+.nav-menu .active:focus,
+.nav-menu li:hover>a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav-menu a:hover i,
+.nav-menu .active i,
+.nav-menu .active:focus i,
+.nav-menu li:hover>a i {
+  color: #149ddd;
+}
+
+/* Mobile Navigation */
+.mobile-nav-toggle {
+  position: fixed;
+  right: 15px;
+  top: 15px;
+  z-index: 9998;
+  border: 0;
+  font-size: 24px;
+  transition: all 0.4s;
+  outline: none !important;
+  background-color: #149ddd;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.mobile-nav-active {
+  overflow: hidden;
+}
+
+.mobile-nav-active #header {
+  left: 0;
+}
+            
 
     </style>
 </head>
 
 <body>
+   
     <!-- Barre de navigation latérale -->
-    <div class="sidebar">
-        <!-- Section Profil -->
+    <div class="sidebar"> 
+        <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+        <!-- ======= Header ======= -->
+        <header id="header">
+            <div class="d-flex flex-column">
+
+            <div class="profile">
+
+                <img id="profile-pic" class="img-fluid rounded-circle" src="https://via.placeholder.com/80" alt="Profile Picture" onclick="document.getElementById('profile-pic-input').click();">
+                <input type="file" id="profile-pic-input" style="display: none;" onchange="changeProfilePicture(event)">
+        
+                <h1 class="text-light"><a href="index.html">Alex Smith</a></h1>
+                <div class="social-links mt-3 text-center">
+                    <a href="https://x.com/Exal_Spa/status/1385247256836718598" class="twitter"><i class="bx bxl-twitter"></i></a>
+                    <a href="https://www.facebook.com/ExpertiseAlgerie/" class="facebook"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a href="https://dz.linkedin.com/in/spa-expertise-alg%C3%A9rie-b14445297" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                </div>
+            </div>
+            <nav id="navbar" class="nav-menu navbar">
+                <ul>
+                <li><a href="{{ url('/accueil') }}" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Accueil</span></a></li>
+                <li><a href="{{ url('/profile') }}" class="nav-link scrollto"><i class="bx bx-user"></i> <span>Profile</span></a></li>
+                <li><a href="{{ url('/upload') }}" class="nav-link scrollto"><i class="bx bx-server"></i> <span>EAD</span></a></li>
+                <li><a href="{{ url('/about') }}"  class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>About</span></a></li>
+                <li><a href="{{ url('/contact') }}" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+            </nav>
+        
+        </div>
+        </header>
+        <!-- Section Profil 
         <div class="profile text-center">
             <img id="profile-pic" src="https://via.placeholder.com/80" alt="Profile Picture" onclick="document.getElementById('profile-pic-input').click();">
             <input type="file" id="profile-pic-input" style="display: none;" onchange="changeProfilePicture(event)">
             <h3>John Doe</h3>
            
 
-            <!-- Icônes sociales -->
             <div class="social-links mt-4 mb-4 text-center">
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
                 <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-   
                 <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
             </div>
         </div>
-
-        <!-- Menu Principal -->
+        
+       
       
-        <a href="#" class="nav-link">
-            <i class="fas fa-home me-2"></i> Accueil
+        <a href="{{ url('/accueil') }}" class="nav-link">
+            <i class="bx bx-home"></i> Accueil
         </a>
-        <a href="#" class="nav-link">
-            <i class="fas fa-user me-2"></i> Profile
+        <a href="{{ url('/profile') }}" class="nav-link">
+            <i class="bx bx-user"></i> Profile
+        </a>
+        <a href="{{ url('/upload') }}" class="nav-link">
+            <i class="bx bx-server"></i> EAD
         </a>
 
-        <!-- Menu déroulant multilevel -->
+        
         <div class="dropdown">
-            <a href="#" class="dropdown-toggle text-white nav-link" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+
+            
+            <a href="{{ url('/upload') }}" class="dropdown-toggle text-white nav-link" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                 <i class="fas fa-briefcase me-2"></i> EAD
             </a>
+          
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Web Development</a></li>
                 <li><a class="dropdown-item" href="#">App Development</a></li>
@@ -198,14 +423,16 @@
                     </ul>
                 </li>
             </ul>
+            
         </div>
-
-        <a href="#" class="nav-link">
-            <i class="fas fa-envelope me-2"></i> Contact
+        
+        <a href="{{ url('/contact') }}" class="nav-link">
+            <i class="bx bx-envelope"></i> Contact
         </a>
-        <a href="#" class="nav-link">
-            <i class="fas fa-envelope me-2"></i> About
+        <a href="{{ url('/about') }}" class="nav-link">
+            <i class="bx bx-file-blank"></i> About
         </a>
+        -->
     </div>
 
     <!-- Contenu principal de la page 
