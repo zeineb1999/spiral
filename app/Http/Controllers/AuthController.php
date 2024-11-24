@@ -48,7 +48,7 @@ class AuthController extends Controller
             ]);
 
             // Redirection après succès
-            return redirect()->intended('index'); // ou vers une autre page selon le besoin
+            return redirect()->intended('accueil'); // ou vers une autre page selon le besoin
         } else {
             // Message d'erreur si l'utilisateur n'est pas trouvé
             return back()->with('error', 'Nom d\'utilisateur ou mot de passe incorrect!');

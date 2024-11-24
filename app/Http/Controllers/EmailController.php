@@ -5,47 +5,34 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestEmail;
+use Symfony\Component\Mime\Part\File;
+use Symfony\Component\Mime\Email;
 
 class EmailController extends Controller
 {
-    public function sendEmail(Request $request)
-    {    dd("EmailControlleur",$request->all(), $request->file('images'), $request->file('pdfs'));
-        // Valider les données
- 
-        try {
-            $request->validate([
-                'email' => 'required|email',
-                'images.*' => 'nullable|mimes:jpg,jpeg,png|max:20480',
-                'pdfs.*' => 'nullable|mimes:pdf|max:20480',
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            dd("Validation failed", $e->errors());
-        }
-        
-      
-        // Récupérer les fichiers uploadés
-        $attachments = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $photo) {
-                $attachments[] = $photo->store('attachments', 'public');
-            }
-        }
-        if ($request->hasFile('pdfs')) {
-            foreach ($request->file('pdfs') as $pdf) {
-                $attachments[] = $pdf->store('attachments', 'public');
-            }
-        }
-        
-        // Construire les données pour l'email
-        $data = 'Voici un email avec des fichiers joints.';
-        dd($attachments, $data);
-        // Envoyer l'email avec les fichiers attachés
-        try {
-            Mail::to($request->email)->send(new TestEmail($data, $attachments));
+    public function sendEmailWithPhoto(Request $request)
+{
+    // Validation des champs
+    $validated = $request->validate([
+        'email' => 'required|email',
+        'photo' => 'required|file|mimes:jpg,png,jpeg,pdf|max:10240', // S'assurer que c'est un fichier valide
+    ]);
 
-            return redirect()->back()->with('success', 'Email envoyé avec succès !');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erreur lors de l\'envoi de l\'email : ' . $e->getMessage());
-        }
+    $email = $validated['email'];
+    $photo = $request->file('photo');  // Récupérer le fichier de la requête
+
+    // Vérifier si le fichier existe et l'attacher à l'email
+    if ($photo && $photo->isValid()) {
+        // Récupérer le chemin du fichier
+        $path = $photo->getRealPath();
+        $name = $photo->getClientOriginalName();  // Récupérer le nom original du fichier
+
+        // Envoyer l'email avec la pièce jointe
+        Mail::to($email)->send(new TestEmail($path, $name));  // Passer le fichier au Mailable
+    } else {
+        // Gérer l'erreur si le fichier photo n'est pas valide
+        return back()->withErrors(['photo' => 'Fichier photo invalide']);
     }
+}
+
 }
