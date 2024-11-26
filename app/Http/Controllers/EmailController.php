@@ -29,6 +29,7 @@ class EmailController extends Controller
 
         // Envoyer l'email avec la pièce jointe
         Mail::to($email)->send(new TestEmail($path, $name));  // Passer le fichier au Mailable
+        return redirect()->back()->with('success', 'Message sent successfully!');
     } else {
         // Gérer l'erreur si le fichier photo n'est pas valide
         return back()->withErrors(['photo' => 'Fichier photo invalide']);

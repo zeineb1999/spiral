@@ -44,11 +44,20 @@
     <section id="about" class="about">
     <div class="container">
         <div class="row justify-content-md-center">
-        <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
-            <h2 class="mb-4 display-5 text-center">A propos de nous</h2>
-            <p class="text-secondary mb-5 text-center lead fs-4">Expertise Algérie (EXAL Spa), Leader dans le domaine de l’expertise, est une entreprise publique économique dotée d’un capital social de 500.000.000 DA. Créée en 1997, elle est la filiale de trois importantes compagnies d’assurance, à savoir la CAAR , la CAAT et la CCR..</p>
-            <hr class="w-50 mx-auto mb-1 mb-xl-0 border-dark-subtle">
-        </div>
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6 text-center">
+                <!-- Logo devant le titre -->
+                <div class="  mb-4">
+                    <div>
+                       <h2 class="display-5 mb-0">À propos de nous</h2>  
+                       <p class="text-secondary lead fs-4 mb-0">
+                        Expertise Algérie (EXAL Spa), Leader dans le domaine de l’expertise, est une entreprise publique économique dotée d’un capital social de 500.000.000 DA. Créée en 1997, elle est la filiale de trois importantes compagnies d’assurance, à savoir la CAAR, la CAAT et la CCR.
+                       </p>
+                    </div>
+                    <img src="{{ asset('images/exal_fr.png') }}" alt="Logo à droite" class="ms-3 logo-paragraph">
+                </div>
+
+                <hr class="w-50 mx-auto mt-4 border-dark-subtle">
+            </div>
         </div>
     </div>
 

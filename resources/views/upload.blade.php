@@ -120,7 +120,7 @@
                     </div>
                     <!-- Photo -->
                     <div class="form-group">
-                        <input type="file" name="photo" class="form-control" accept="image/*" required>
+                        <input type="file" name="photo" class="form-control" accept=".pdf" required>
                     </div>
                 </div>
                 <!-- Colonne droite -->
@@ -138,6 +138,16 @@
                 </div>
             </div>
         </form>
+        @if(session('success'))
+        <div class="m-4">
+            <!-- Success Alert -->
+            <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
+                <i class="bi-check-circle-fill"></i>
+                <strong class="mx-2">Success!</strong> Your message has been sent successfully.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+        @endif
 
         </div>
     </div>

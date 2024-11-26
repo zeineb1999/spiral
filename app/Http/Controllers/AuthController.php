@@ -58,6 +58,6 @@ class AuthController extends Controller
     public function logout()
     {
         session()->flush(); // Détruire toutes les données de session
-        return redirect()->route('login');
+        return redirect()->route('');
     }
 }

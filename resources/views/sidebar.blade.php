@@ -72,16 +72,16 @@
                 transform: translateX(-100%); /* Déplace la sidebar hors de l'écran */
             }
         }
-
+        /*
         .profile img {
             width: 120px;
             height: 120px;
             object-fit: cover;
             border-radius: 50%;
-            border: 8px solid rgba(77, 77 ,88, 1); /* Remplace la transparence dynamique */
+            border: 8px solid rgba(77, 77 ,88, 1); 
             cursor: pointer;
         }
-
+        */
 
         .profile h5 {
             margin-top: 10px;
@@ -363,11 +363,11 @@
             <div class="d-flex flex-column">
 
             <div class="profile">
-
-                <img id="profile-pic" class="img-fluid rounded-circle" src="https://via.placeholder.com/80" alt="Profile Picture" onclick="document.getElementById('profile-pic-input').click();">
-                <input type="file" id="profile-pic-input" style="display: none;" onchange="changeProfilePicture(event)">
+            <img id="profile-pic"  src="{{ asset('images/caat.jpg') }}" alt="Profile Picture" onclick="document.getElementById('profile-pic-input').click();" style="cursor: pointer; width: 100px; height: 100px;">
+                 <!--<img id="profile-pic" class="img-fluid rounded-circle" src="https://via.placeholder.com/80" alt="Profile Picture" onclick="document.getElementById('profile-pic-input').click();">
+                <input type="file" id="profile-pic-input" style="display: none;" onchange="changeProfilePicture(event)"> -->
         
-                <h1 class="text-light"><a href="index.html">Alex Smith</a></h1>
+                <h1 class="text-light"><a href="index.html">CAAT</a></h1>
                 <div class="social-links mt-3 text-center">
                     <a href="https://x.com/Exal_Spa/status/1385247256836718598" class="twitter"><i class="bx bxl-twitter"></i></a>
                     <a href="https://www.facebook.com/ExpertiseAlgerie/" class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -382,6 +382,7 @@
                 <li><a href="{{ url('/upload') }}" class="nav-link scrollto"><i class="bx bx-server"></i> <span>EAD</span></a></li>
                 <li><a href="{{ url('/about') }}"  class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>About</span></a></li>
                 <li><a href="{{ url('/contact') }}" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+                <li><a href="{{ url('/') }}" class="nav-link scrollto"><i class="bx bx-log-out"></i> <span>Déconnexion</span></a></li>
                 </ul>
             </nav>
         
