@@ -8,6 +8,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Optionnel : inclure le font awesome pour les icônes de réseaux sociaux -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <!-- Ajouter la bibliothèque reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <!-- Section principale -->
@@ -87,7 +89,8 @@
                                         </button>
                                     </div>
                                 </div>
-
+                                <!-- Ajout du reCAPTCHA -->
+                                <div class="g-recaptcha" data-sitekey="VOTRE_SITE_KEY"></div>
                                 <!-- Submit button qui prend toute la largeur -->
                                 <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4 w-100">
                                     Connexion

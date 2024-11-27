@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\RequisitionController;
 
 Route::get('/', function () {return view('welcome');});
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -17,4 +18,5 @@ Route::get('/about', function () {return view('about');});
 Route::get('/accueil', function () {return view('accueil');});
 Route::get('/profile', function () {return view('profile');});
 Route::post('/send-email-with-photo', [EmailController::class, 'sendEmailWithPhoto']);
-Route::get('/test', function () {return view('test');});
+
+Route::get('/test', [RequisitionController::class, 'index'])->name('test');

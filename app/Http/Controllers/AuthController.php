@@ -26,29 +26,23 @@ class AuthController extends Controller
         $password = $request->input('password');
 
         // Requête pour vérifier l'utilisateur dans la base de données
-        $user = DB::table('user')
-            ->join('employe', 'user.UserID', '=', 'employe.IdEmploye')
-            ->join('structure', 'employe.Structure', '=', 'structure.Code')
-            ->join('direction', 'structure.Direction', '=', 'direction.Code')
-            ->where('user.UserID', $username)
-            ->where('user.Password', $password) // Il est conseillé d'utiliser Hash::check pour vérifier les mots de passe
-            ->where('user.Enabled', 1)
+        $user = DB::table('client')
+       
+            ->where('client.Username', $username)
+            ->where('client.Motdepasse', $password) // Il est conseillé d'utiliser Hash::check pour vérifier les mots de passe
+
             ->first();
        
 
         if ($user) {
             // Démarrer une session
             session([
-                'username' => $user->UserID,
-                'name' => $user->Nom . ' ' . $user->Prenom,
-                'structure' => $user->Structure,
-                'direction' => $user->Direction,
-                'structurename' => $user->Structure,
-                'directionname' => $user->Direction,
+                'username' => $user->Username,
+                
             ]);
 
             // Redirection après succès
-            return redirect()->intended('accueil'); // ou vers une autre page selon le besoin
+            return redirect()->intended('test'); // ou vers une autre page selon le besoin
         } else {
             // Message d'erreur si l'utilisateur n'est pas trouvé
             return back()->with('error', 'Nom d\'utilisateur ou mot de passe incorrect!');

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>iPortfolio Bootstrap Template - Index</title>
+  <title>Portail exass</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -15,6 +15,8 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Vendor CSS Files
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -101,6 +103,16 @@ h4,
 h5,
 h6 {
   font-family: "Raleway", sans-serif;
+}
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table th, .table td {
+  white-space: nowrap;  /* Empêche la rupture de ligne dans les cellules */
+  text-overflow: ellipsis;  /* Ajoute des points de suspension si le texte est trop long */
+  overflow: hidden;  /* Masque les parties débordantes du texte */
 }
 
 /*--------------------------------------------------------------
@@ -1174,10 +1186,65 @@ section {
     padding-right: 20px 15px;
   }
 }
-.table thead {
-    background-color: #343a40; /* Couleur de fond sombre */
-    color: #fff;              /* Couleur du texte en blanc */
+/*---------------------------------------------------------
+#Send Email
+----------------------------------------------------------*/
+.contact-form 
+{
+  background: #fff;
+  border-radius: 8px; /* Ajoute des coins arrondis */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1); /* Ajoute une ombre */
 }
+.contact-form .form-group {
+  margin-bottom: 15px; /* Ajoute un espace entre les champs */
+}
+
+.contact-form .form-control{
+  border-radius:1rem;
+  
+}
+.contact-image{
+  text-align: center;
+}
+.contact-image img{
+  border-radius: 6rem;
+  width: 11%;
+  margin-top: -3%;
+  transform: rotate(29deg);
+}
+.contact-form form{
+  padding: 14%;
+}
+.contact-form form .row{
+  margin-bottom: -7%;
+}
+.contact-form h3{
+  margin-bottom: 8%;
+  margin-top: -10%;
+  text-align: center;
+  color: #2C2F3F;
+}
+.contact-form .btnContact {
+  width: 100%;
+  border: none;
+  border-radius: 1rem;
+  padding: 1.5%;
+  background: #2C2F3F;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}        
+.btnContactSubmit
+{
+  width: 100%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  color: #fff;
+  background-color: #2C2F3F;
+  border: none;
+  cursor: pointer;
+}
+        
   </style>
 </head>
 
@@ -1192,7 +1259,7 @@ section {
 
       <div class="profile">
         <img src="images/caat.jpg" alt="caat" >
-        <h1 class="text-light"><a href="index.html">CAAT 372</a></h1>
+        <h1 class="text-light"><a href="index.html">{{ session('username', 'Valeur par défaut') }}</a></h1>
         <div class="social-links mt-3 text-center">
           <a href="https://x.com/Exal_Spa" class="twitter"><i class="bx bxl-twitter"></i></a>
           <a href="https://www.facebook.com/ExpertiseAlgerie" class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -1204,8 +1271,8 @@ section {
       <nav id="navbar" class="nav-menu navbar">
         <ul>
           <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Acceuil</span></a></li>
-          <li><a href="#services" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>EAD</span></a></li>
-          <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Rapports d'expertise</span></a></li>
+          <li><a href="#skills" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>EAD</span></a></li>
+          <li><a href="#services" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Rapports d'expertise</span></a></li>
           <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Etats d'impressions</span></a></li>
           <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
           <li><a href="#about" class="nav-link scrollto"><i class="bx bx-server"></i> <span> À propos</span></a></li>
@@ -1225,298 +1292,195 @@ section {
   </section><!-- End Hero -->
 
   <main id="main">
-
-   
-
-    <!-- 
-    <section id="skills" class="skills section-bg">
+    <section id="skills" class="skills">
       <div class="container">
-
         <div class="section-title">
-          <h2>Skills</h2>
+          <h2>Expertise a distance </h2>
           <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
         </div>
-
-        <div class="row skills-content">
-
-          <div class="col-lg-6" data-aos="fade-up">
-
-            <div class="progress">
-              <span class="skill">HTML <i class="val">100%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
+        <div class="contact-form">
+            <div class="contact-image">
+                <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
             </div>
-
-            <div class="progress">
-              <span class="skill">CSS <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
+        <form action="/send-email-with-photo" method="POST" enctype="multipart/form-data">
+            @csrf
+            <h3>Drop Us a Message</h3>
+            <div class="row">
+                <!-- Colonne gauche -->
+                <div class="col-md-6">
+                    <!-- Nom -->
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Your Name *" >
+                    </div>
+                    <!-- Email -->
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Your Email *" required>
+                    </div>
+                    <!-- Téléphone -->
+                    <div class="form-group">
+                        <input type="text" name="phone" class="form-control" placeholder="Your Phone Number *" >
+                    </div>
+                    <!-- Photo -->
+                    <div class="form-group">
+                        <input type="file" name="photo" class="form-control" accept=".pdf" required>
+                    </div>
+                </div>
+                <!-- Colonne droite -->
+                <div class="col-md-6">
+                    <!-- Message (avant le bouton d'envoi) -->
+                    <div class="form-group">
+                        <textarea name="message" class="form-control" placeholder="Your Message *" style="width: 100%; height: 150px;" ></textarea>
+                    </div>
+                
+                    
+                </div>
+                <!-- Bouton d'envoi -->
+                <div class="form-group">
+                    <input type="submit" name="btnSubmit" class="btnContact" value="Send Message">
+                </div>
             </div>
-
-            <div class="progress">
-              <span class="skill">JavaScript <i class="val">75%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
+        </form>
+        @if(session('success'))
+        <div class="m-4">
+            <!-- Success Alert -->
+            <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
+                <i class="bi-check-circle-fill"></i>
+                <strong class="mx-2">Success!</strong> Your message has been sent successfully.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-
-            <div class="progress">
-              <span class="skill">PHP <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">WordPress/CMS <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Photoshop <i class="val">55%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-          </div>
+        </div>
+        @endif
 
         </div>
-
       </div>
-    </section>-->
+    </section>
 
-    <!-- 
+  
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg ">
+      <div class="container">
+        <div class="section-title">
+          <h2>Liste des réquisitions enregistrées </h2>
+        </div>
+
+        <br><h2 class="text-center">Branche : I.A.R.D</h2><br>
+        <p class="text-end"><a href="search_requisition.php?branche=2"><i class="bi bi-search"></i> Essayer la recherche avancée</a></p>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text font-weight-bold">Structure : </span>
+          </div>
+        <select name="structure" class="custom-select" id="structure">
+          <option value="">Toutes les structures</option>
+          
+        </select>
+        <div class="input-group-prepend">
+          <span class="input-group-text font-weight-bold">Du : </span>
+        </div>
+        <input type="date" name="date1" id="date1" class="form-control font-weight-bold" value="<?php echo date('Y-m-01'); ?>">
+        <div class="input-group-prepend">
+            <span class="input-group-text font-weight-bold">Au : </span>
+        </div>
+        <input type="date" name="date2" id="date2" class="form-control font-weight-bold" value="<?php echo date('Y-m-t'); ?>">
+        <button class="btn btn-primary btn-success" onClick="tabIard();"><i class="bi bi-search"></i>&nbsp;Afficher</button>
+        <div class="input-group mb-2">
+          <input class="form-control" id="myInput" type="text" placeholder="Filtrer..">
+        </div>
+        <div class="table-responsive" style="overflow-x: auto;">
+          <table class="table  table-striped table-hover table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th class="text-center"><i class="bi bi-pencil-fill"></i></th>
+                <th>N°</th>
+                <th>Date</th>
+                <th>Affaire</th>
+                <th>Client</th>
+                <th>Date sin.</th>
+                <th>Objet</th>
+                <th>Expert</th>
+                <th>Rapport</th>
+                <th>Fact.</th>
+              </tr>
+            </thead>
+            <tbody id="myTable">
+
+            @forelse ($requisitions as $requisition)
+                        <tr>
+                            <td class="text-center"><i class="bi bi-pencil-fill"></i></td>
+                            <td>{{ $requisition->Structure}}</td>
+                            <td>{{ $requisition->DateEnreg }}</td>
+                            <td>{{ $requisition->Branche }}</td>
+                            <td>{{ $requisition->CodeComp }}</td>
+                            <td>{{ $requisition->DateExp }}</td>
+                            <td>{{ $requisition->Objet }}</td>
+                            <td>{{ $requisition->CodeClient }}</td>
+                            <td class="text-center">
+                                
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                              
+                            </td>
+                            <td class="text-center">
+                               
+                                    <i class="bi bi-dash-lg"></i>
+                                
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="10" class="text-center">Aucune réquisition trouvée.</td>
+                        </tr>
+                    @endforelse
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section><!-- End Services Section -->
+
+   
     <section id="resume" class="resume">
       <div class="container">
 
         <div class="section-title">
-          <h2>Resume</h2>
+          <h2>Etats d'impressions</h2>
           <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
         </div>
+        <div class="container mt-3">
+        <h2 class="text-center">Etats des affaires en instances</h2><br>
+        <fieldset class="mb-3">
+            <legend class="card-header mb-3" style="background-color: #191E24; color: white; padding: 5px 10px;">Détail</legend>
+            <!-- Détail des affaires en instances par affaire -->
+            <legend>Par affaire :</legend>
+            <form id="form1" >
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text font-weight-bold">Structure :</span>
+                    </div>
+                    <input type="hidden" name="p" value="detail_inst_par_affaire">
+                    <select name="structure" class="custom-select col-sm-4" required>
+                        <option value='%'>Toutes les structures</option>
+                        <!-- Ajouter ici les options de structures dynamiques -->
+                    </select>
+                    <select name="branche" class="custom-select col-sm-2" required>
+                        <option value="1">Automobile</option>
+                        <option value="2">IARD</option>
+                        <option value="3" >Transport</option>
+                    </select>
+                    <select name="mois" class="custom-select col-sm-2" required>
+                         </select>
+                    <select name="annee" class="custom-select col-sm-2" required>
+                     </select>
+                    <button type="submit" class="form-control btn-success col-sm-2">Afficher&nbsp;&nbsp;<i class="bi bi-binoculars-fill"></i></button>
+                </div>
+            </form>
 
-        <div class="row">
-          <div class="col-lg-6" data-aos="fade-up">
-            <h3 class="resume-title">Sumary</h3>
-            <div class="resume-item pb-0">
-              <h4>Alex Smith</h4>
-              <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing and developing user-centered digital/print marketing material from initial concept to final, polished deliverable.</em></p>
-              <ul>
-                <li>Portland par 127,Orlando, FL</li>
-                <li>(123) 456-7891</li>
-                <li>alice.barkley@example.com</li>
-              </ul>
-            </div>
+            <!-- Répéter pour les autres formulaires comme form2, form3, etc. -->
+            
+        </fieldset>
+    
+    </div>
 
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Master of Fine Arts &amp; Graphic Design</h4>
-              <h5>2015 - 2016</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Qui deserunt veniam. Et sed aliquam labore tempore sed quisquam iusto autem sit. Ea vero voluptatum qui ut dignissimos deleniti nerada porti sand markend</p>
-            </div>
-            <div class="resume-item">
-              <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
-              <h5>2010 - 2014</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel ratione eius unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur neque etlon sader mart dila</p>
-            </div>
-          </div>
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>Senior graphic design specialist</h4>
-              <h5>2019 - Present</h5>
-              <p><em>Experion, New York, NY </em></p>
-              <ul>
-                <li>Lead in the design, development, and implementation of the graphic, layout, and production communication materials</li>
-                <li>Delegate tasks to the 7 members of the design team and provide counsel on all aspects of the project. </li>
-                <li>Supervise the assessment of all graphic materials in order to ensure quality and accuracy of the design</li>
-                <li>Oversee the efficient use of production project budgets ranging from $2,000 - $25,000</li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Graphic design specialist</h4>
-              <h5>2017 - 2018</h5>
-              <p><em>Stepping Stone Advertising, New York, NY</em></p>
-              <ul>
-                <li>Developed numerous marketing programs (logos, brochures,infographics, presentations, and advertisements).</li>
-                <li>Managed up to 5 projects or tasks at a given time while under pressure</li>
-                <li>Recommended and consulted with clients on the most appropriate graphic design</li>
-                <li>Created 4+ design presentations and proposals a month for clients and account managers</li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
       </div>
-    </section> -->
-
-  
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services ">
-      <div class="container">
-
-      <br><h2 class="text-center">Liste des réquisitions enregistrées</h2><h4 class="text-center">Branche : I.A.R.D</h4><br>
-      <h5 class="text-right"><a href="search_requisition.php?branche=2"><i class="bi bi-search"></i> Essayer la recherche avancée</a></h5>
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
-          <span class="input-group-text font-weight-bold">Structure : </span>
-        </div>
-      <select name="structure" class="custom-select" id="structure">
-        <option value="">Toutes les structures</option>
-
-      </select>
-      <div class="input-group-prepend">
-        <span class="input-group-text font-weight-bold">Du : </span>
-      </div>
-      <input type="date" name="date1" id="date1" class="form-control font-weight-bold" value="<?php echo date('Y-m-01'); ?>">
-      <div class="input-group-prepend">
-          <span class="input-group-text font-weight-bold">Au : </span>
-      </div>
-      <input type="date" name="date2" id="date2" class="form-control font-weight-bold" value="<?php echo date('Y-m-t'); ?>">
-      <button class="btn btn-primary btn-success" onClick="tabIard();"><i class="bi bi-search"></i>&nbsp;Afficher</button>
-      <div class="input-group mb-2">
-  	    <input class="form-control" id="myInput" type="text" placeholder="Filtrer..">
-      </div>
-    <table class="table table-striped table-hover table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th class="text-center"><i class="bi bi-pencil-fill"></i></th>
-        <th>N°</th>
-        <th>Date</th>
-        <th>Affaire</th>
-        <th>Client</th>
-        <th>Date sin.</th>
-        <th>Objet</th>
-		    <th>Expert</th>
-        <th>Rapport</th>
-        <th>Fact.</th>
-      </tr>
-    </thead>
-    <tbody id="myTable">
-
-                <!-- Exemple de ligne statique -->
-                <tr>
-                    <td class="text-center"><i class="bi bi-lock-fill"></i></td>
-                    <td>1/2024/2/001</td>
-                    <td>01/11/2024</td>
-                    <td>Assurance X</td>
-                    <td>Client Y</td>
-                    <td>02/11/2024</td>
-                    <td>Accident mineur</td>
-                    <td>Expert Z</td>
-                    <td class="text-center"><i class="bi bi-file-earmark-pdf"></i></td>
-                    <td class="text-center"><i class="bi bi-dash-lg"></i></td>
-                </tr>
-                <tr>
-                    <td class="text-center"><i class="bi bi-pencil-fill"></i></td>
-                    <td>1/2024/2/002</td>
-                    <td>03/11/2024</td>
-                    <td>Assurance Y</td>
-                    <td>Client Z</td>
-                    <td>04/11/2024</td>
-                    <td>Vol de véhicule</td>
-                    <td>Expert A</td>
-                    <td class="text-center"><i class="bi bi-file-earmark-pdf"></i></td>
-                    <td class="text-center"><i class="bi bi-clipboard2-check-fill"></i></td>
-                </tr>
-            </tbody>
-        </table>
-   
-      </div>
-    </section><!-- End Services Section -->
-
-    <!--
-    <section id="testimonials" class="testimonials ">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Testimonials</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item" data-aos="fade-up">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="images/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="images/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="images/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="images/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item" data-aos="fade-up" data-aos-delay="400">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="images/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-    </section> -->
+    </section> 
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact section-bg">
