@@ -11,18 +11,11 @@ class RequisitionController extends Controller
     public function index()
     {
         // Récupérer toutes les réquisitions depuis la base de données
-       
-      
-        $username = trim(session('username')); // Supprimer les espaces autour du username
-
+        $username = session('username'); 
         $requisitions = DB::table('requisition')
-       
-        ->paginate(50);
-
-
-        dd($requisitions);
-
-
+        ->whereRaw('? LIKE CONCAT("%", `CodeComp`, "%")', [$username])
+        ->paginate(10);
+        //dd($query);
         // Passer les données à la vue
         return view('test', compact('requisitions'));
     }

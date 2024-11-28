@@ -1332,6 +1332,8 @@ section {
                         <textarea name="message" class="form-control" placeholder="Your Message *" style="width: 100%; height: 150px;" ></textarea>
                     </div>
                 
+   
+
                     
                 </div>
                 <!-- Bouton d'envoi -->
@@ -1389,7 +1391,7 @@ section {
           <table class="table  table-striped table-hover table-bordered">
             <thead class="table-dark">
               <tr>
-                <th class="text-center"><i class="bi bi-pencil-fill"></i></th>
+                
                 <th>N°</th>
                 <th>Date</th>
                 <th>Affaire</th>
@@ -1404,31 +1406,35 @@ section {
             <tbody id="myTable">
 
             @forelse ($requisitions as $requisition)
-                        <tr>
-                            <td class="text-center"><i class="bi bi-pencil-fill"></i></td>
-                            <td>{{ $requisition->Structure}}</td>
-                            <td>{{ $requisition->DateEnreg }}</td>
-                            <td>{{ $requisition->Branche }}</td>
-                            <td>{{ $requisition->CodeComp }}</td>
-                            <td>{{ $requisition->DateExp }}</td>
-                            <td>{{ $requisition->Objet }}</td>
-                            <td>{{ $requisition->CodeClient }}</td>
-                            <td class="text-center">
-                                
-                                    <i class="bi bi-file-earmark-pdf"></i>
-                              
-                            </td>
-                            <td class="text-center">
-                               
-                                    <i class="bi bi-dash-lg"></i>
-                                
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="10" class="text-center">Aucune réquisition trouvée.</td>
-                        </tr>
-                    @endforelse
+              <tr>
+                  
+                  <td>{{ $requisition->Structure}}</td>
+                  <td>{{ $requisition->DateEnreg }}</td>
+                  <td>{{ $requisition->Branche }}</td>
+                  <td>{{ $requisition->CodeComp }}</td>
+                  <td>{{ $requisition->DateExp }}</td>
+                  <td>{{ $requisition->Objet }}</td>
+                  <td>{{ $requisition->CodeClient }}</td>
+                  <td class="text-center">
+                  @if ((session('username') == $requisition->CodeComp . $requisition->CodeClient))
+                      <i class="bi bi-file-earmark-pdf"></i>
+                  @else
+                      <i class="bi bi-dash-lg"></i>
+                  @endif
+                  </td>
+                  <td class="text-center">
+                  @if ((session('username') == $requisition->CodeComp . $requisition->CodeClient))
+                      <i class="bi bi-file-earmark-pdf"></i>
+                  @else
+                      <i class="bi bi-dash-lg"></i>
+                  @endif
+                  </td>
+              </tr>
+            @empty
+              <tr>
+                  <td colspan="10" class="text-center">Aucune réquisition trouvée.</td>
+              </tr>
+            @endforelse
             </tbody>
           </table>
         </div>
@@ -1520,20 +1526,21 @@ section {
           </div>
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="/send-message" method="POST" role="form" class="php-email-form"  enctype="multipart/form-data">
+            @csrf
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="name">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name" required>
+                  <input type="text" name="name" class="form-control" id="name" >
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" required>
+                  <input type="email" class="form-control" name="email" id="email" >
                 </div>
               </div>
               <div class="form-group">
-                <label for="name">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" required>
+                <label for="name">Objet</label>
+                <input type="text" class="form-control" name="subject" id="subject" >
               </div>
               <div class="form-group">
                 <label for="name">Message</label>
@@ -1644,251 +1651,109 @@ section {
     </section><!-- End Facts Section -->
     </section><!-- End About Section -->
     
-    <!-- 
-    <section id="facts" class="facts">
-      <div class="container">
+   
 
-        <div class="section-title">
-          <h2>Facts</h2>
-          <p>spa EX-AL Votre partenaire leader en expertise</p>
-        </div>
-
-        <div class="row no-gutters">
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up">
-            <div class="count-box">
-              <i class="bi bi-trophy"></i>
-              <span data-purecounter-start="0" data-purecounter-end="27" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Années d'Expérience</strong> </p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="count-box">
-              <i class="bi bi-piggy-bank"></i>
-              <span data-purecounter-start="0" data-purecounter-end="500" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Millions de DA de Capital Social</strong></p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="200">
-            <div class="count-box">
-              <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="370" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Employés</strong> </p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch" data-aos="fade-up" data-aos-delay="300">
-            <div class="count-box">
-              <i class="bi bi-building"></i>
-              <span data-purecounter-start="0" data-purecounter-end="43" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Nbr des Centres d'Expertise</strong></p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section> -->
-
-
-  <!-- 
-    <section id="portfolio" class="portfolio section-bg">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Profile</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row" data-aos="fade-up">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="images/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="images/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section> -->
   <section id="portfolio" class="portfolio section-bg">
     <div class="container">
       <div class="section-title">
         <h2>Profile</h2>
         <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
       </div>
-       
-      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="card h-100">
-             <div class="card-body">
-                          <div class="row gutters">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                              <h6 class="mb-2 text-primary">Personal Details</h6>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                              <div class="form-group">
-                                <label for="fullName">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" placeholder="Enter full name">
-                              </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                              <div class="form-group">
-                                <label for="eMail">Email</label>
-                                <input type="email" class="form-control" id="eMail" placeholder="Enter email ID">
-                              </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                              <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
-                              </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                              <div class="form-group">
-                                <label for="website">Website URL</label>
-                                <input type="url" class="form-control" id="website" placeholder="Website url">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row gutters">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                              <h6 class="mt-3 mb-2 text-primary">Address</h6>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                              <div class="form-group">
-                                <label for="Street">Street</label>
-                                <input type="name" class="form-control" id="Street" placeholder="Enter Street">
-                              </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                              <div class="form-group">
-                                <label for="ciTy">City</label>
-                                <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
-                              </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                              <div class="form-group">
-                                <label for="sTate">State</label>
-                                <input type="text" class="form-control" id="sTate" placeholder="Enter State">
-                              </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                              <div class="form-group">
-                                <label for="zIp">Zip Code</label>
-                                <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="mt-4  row gutters ">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                              <div class="text-right">
-                                <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-                                <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>           
-        </div>
-      </div>           
-      
+      <form action="{{ route('update-profile') }}" method="POST">
+      @csrf
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="card h-100">
+              <div class="card-body">
+                <div class="row gutters">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h6 class="mb-2 text-primary">Personal Details</h6>
+                  </div>
+                  @if(isset($client) && $client->CodeComp && $client->CodeClient)
+    
+
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="fullName">Full Name</label>
+                      <input type="text" class="form-control" id="fullName" name="full_name" 
+                      value="{{ old('full_name', $client->CodeComp . $client->CodeClient) }}" placeholder="Enter full name">
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="Email">Email</label>
+                      <input type="Email" class="form-control" id="Email" name="email" 
+                      value="{{ old('Email', $client->Email) }}" placeholder="Enter email ID">
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="Tel">Phone</label>
+                      <input type="text" class="form-control" id="Tel"  name="Tel" 
+                      value="{{ old('Tel', $client->Tel) }}" placeholder="Enter phone number">
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="website">Website URL</label>
+                      <input type="url" class="form-control" id="website"  name="website" 
+                      value="{{ old('website', $client->website) }}" placeholder="Website url">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="Adresse">Street</label>
+                      <input type="name" class="form-control" id="Adresse"  name="Adresse" 
+                      value="{{ old('Adresse', $client->Adresse) }}" placeholder="Enter Adresse">
+                    </div>
+                </div>
+                @else
+                <p>Client information is missing.</p>
+                @endif
+                <!--<div class="row gutters">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="Street">Street</label>
+                      <input type="name" class="form-control" id="Street" placeholder="Enter Street">
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="ciTy">City</label>
+                      <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="sTate">State</label>
+                      <input type="text" class="form-control" id="sTate" placeholder="Enter State">
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="zIp">Zip Code</label>
+                      <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+                    </div>
+                  </div>
+                </div>-->
+                <div class="mt-4  row gutters ">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="text-right">
+                      <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
+                      <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                    </div>
+                  </div>
+                </div>
+              </div>           
+          </div>
+        </div>           
+      </form>
     </div>
   </section>
   </main><!-- End #main -->

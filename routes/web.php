@@ -20,3 +20,9 @@ Route::get('/profile', function () {return view('profile');});
 Route::post('/send-email-with-photo', [EmailController::class, 'sendEmailWithPhoto']);
 
 Route::get('/test', [RequisitionController::class, 'index'])->name('test');
+Route::post('/send-message', [EmailController::class, 'sendMessage']);
+Route::get('/send-message', function () {
+    return 'Cette route est seulement pour le test';
+});
+Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile');
+Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
