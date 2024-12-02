@@ -1,5 +1,6 @@
+@if(session('username'))
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -16,16 +17,11 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
+   <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 
-  <!-- Vendor CSS Files
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  -->
   
   <!-- Lien vers la feuille de style Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -60,6 +56,11 @@
 
 
     @vite('resources/js/app.js')
+    @routes
+    <script>
+      // Générer l'URL de la route Laravel et la rendre accessible pour le JS
+      var filterUrl = "{{ route('requisitions.filter') }}";
+    </script>
 
 
   <!-- =======================================================
@@ -168,15 +169,24 @@ h6 {
 #header .profile img {
   margin: 15px auto;
   display: block;
-  width: 120px;
+  width: 80px;
   
 }
 
 #header .profile h1 {
-  font-size: 24px;
+  font-size: 17px;
   margin: 0;
   padding: 0;
-  font-weight: 600;
+  font-weight: 200;
+  -moz-text-align-last: center;
+  text-align-last: center;
+  font-family: "Poppins", sans-serif;
+}
+#header .profile h4 {
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
   -moz-text-align-last: center;
   text-align-last: center;
   font-family: "Poppins", sans-serif;
@@ -1258,8 +1268,10 @@ section {
     <div class="d-flex flex-column">
 
       <div class="profile">
-        <img src="images/caat.jpg" alt="caat" >
-        <h1 class="text-light"><a href="index.html">{{ session('username', 'Valeur par défaut') }}</a></h1>
+        <img src="images/clients/caar.jpg" alt="caat" >
+        
+        <h4 class="text-light">{{ session('compagnie') }} {{ session('agence') }}</h4>
+        <h1 class="text-light"><a href="index.html">{{ session('designation') }}</a></h1>
         <div class="social-links mt-3 text-center">
           <a href="https://x.com/Exal_Spa" class="twitter"><i class="bx bxl-twitter"></i></a>
           <a href="https://www.facebook.com/ExpertiseAlgerie" class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -1270,14 +1282,26 @@ section {
 
       <nav id="navbar" class="nav-menu navbar">
         <ul>
-          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Acceuil</span></a></li>
+          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Accueil</span></a></li>
           <li><a href="#skills" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>EAD</span></a></li>
           <li><a href="#services" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Rapports d'expertise</span></a></li>
           <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Etats d'impressions</span></a></li>
           <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
           <li><a href="#about" class="nav-link scrollto"><i class="bx bx-server"></i> <span> À propos</span></a></li>
           <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-user"></i> <span>Profile</span></a></li>
-          <li><a href="{{ url('/') }}" class="nav-link scrollto"><i class="bx bx-log-out"></i> <span>Déconnexion</span></a></li>
+          <li>
+          <a href="#" class="nav-link scrollto" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+          @csrf
+              <i class="bx bx-log-out"></i> <span>Déconnexion</span>
+          </a>
+
+          <form id="logout-form" action="{{ url('/logout')  }}" method="POST" style="display: none;">
+              @csrf
+          </form>
+        
+
+
+          </li>
         </ul>
       </nav><!-- .nav-menu -->
     </div>
@@ -1287,7 +1311,7 @@ section {
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="hero-container" data-aos="fade-in">
       <h1>EXAL SPA</h1>
-      <p>I'm <span class="typed" data-typed-items="Automobile, Industrie et batiment, Transport et maritime, Reforme"></span></p>
+      <p>Expertise <span class="typed" data-typed-items="Automobile, Industrie et batiment, Transport et maritime, Évaluation, Réforme"></span></p>
     </div>
   </section><!-- End Hero -->
 
@@ -1360,44 +1384,60 @@ section {
   
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg ">
+
       <div class="container">
         <div class="section-title">
           <h2>Liste des réquisitions enregistrées </h2>
         </div>
-
-        <br><h2 class="text-center">Branche : I.A.R.D</h2><br>
         <p class="text-end"><a href="search_requisition.php?branche=2"><i class="bi bi-search"></i> Essayer la recherche avancée</a></p>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
             <span class="input-group-text font-weight-bold">Structure : </span>
           </div>
-        <select name="structure" class="custom-select" id="structure">
-          <option value="">Toutes les structures</option>
+          <select name="structure" class="form-select" id="structure">
+            <option value="">Toutes les structures</option>
+            @foreach ($structures as $structure)
+            <option value=" {{ $structure->Code }}"> {{  $structure->Code }} {{  $structure->Abreviation }}</option>
+            @endforeach
+          </select>
+          <div class="input-group-prepend">
+              <span class="input-group-text font-weight-bold">Branche : </span>
+          </div>
+          <select name="branche" class="form-select" id="branche">
+            <option value="1" selected>Automobile</option>
+            <option value="2">I.A.R.D</option>
+            <option value="3">Transport</option>
+            
+          </select>
+          <div class="input-group-prepend">
+            <span class="input-group-text font-weight-bold">Du : </span>
+          </div>
+          <input type="date" name="date1" id="date1" class="form-control font-weight-bold" value="<?php echo date('Y-m-d'); ?>">
+          <div class="input-group-prepend">
+              <span class="input-group-text font-weight-bold">Au : </span>
+          </div>
+          <input type="date" name="date2" id="date2" class="form-control font-weight-bold" value="<?php echo date('Y-m-d'); ?>">
+          <button class="btn btn-primary btn-success" id="filterButton"><i class="bi bi-search"></i>&nbsp;Afficher</button>
+
           
-        </select>
-        <div class="input-group-prepend">
-          <span class="input-group-text font-weight-bold">Du : </span>
-        </div>
-        <input type="date" name="date1" id="date1" class="form-control font-weight-bold" value="<?php echo date('Y-m-01'); ?>">
-        <div class="input-group-prepend">
-            <span class="input-group-text font-weight-bold">Au : </span>
-        </div>
-        <input type="date" name="date2" id="date2" class="form-control font-weight-bold" value="<?php echo date('Y-m-t'); ?>">
-        <button class="btn btn-primary btn-success" onClick="tabIard();"><i class="bi bi-search"></i>&nbsp;Afficher</button>
+         
+        </div> 
         <div class="input-group mb-2">
-          <input class="form-control" id="myInput" type="text" placeholder="Filtrer..">
+            <input class="form-control" id="myInput" type="text" placeholder="Filtrer..">
         </div>
+         
         <div class="table-responsive" style="overflow-x: auto;">
-          <table class="table  table-striped table-hover table-bordered">
+          <table class="table  table-striped table-hover table-bordered table-sm">
             <thead class="table-dark">
               <tr>
                 
-                <th>N°</th>
+                <th>Centre</th>
+                <th>N° Rapport</th>
                 <th>Date</th>
                 <th>Affaire</th>
-                <th>Client</th>
+                <th>N° police</th>
+                <th>N° sinitre</th>
                 <th>Date sin.</th>
-                <th>Objet</th>
                 <th>Expert</th>
                 <th>Rapport</th>
                 <th>Fact.</th>
@@ -1406,15 +1446,21 @@ section {
             <tbody id="myTable">
 
             @forelse ($requisitions as $requisition)
-              <tr>
+              <tr class="{{ $requisition->Annulation ? 'text-decoration-line-through' : '' }}">
                   
-                  <td>{{ $requisition->Structure}}</td>
-                  <td>{{ $requisition->DateEnreg }}</td>
-                  <td>{{ $requisition->Branche }}</td>
-                  <td>{{ $requisition->CodeComp }}</td>
-                  <td>{{ $requisition->DateExp }}</td>
-                  <td>{{ $requisition->Objet }}</td>
-                  <td>{{ $requisition->CodeClient }}</td>
+                  <td>
+                      <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $requisition->Abreviation }}">
+                          {{ $requisition->Structure }}
+                      </span>
+                  </td>
+
+                  <td>{{ $requisition->Structure}}/{{ $requisition->Exercice}}/{{ $requisition->Branche}}/{{ $requisition->NoReq}}/{{ $requisition->Objet }}</td>
+                  <td> {{ \Carbon\Carbon::parse($requisition->DateEnreg)->format('d/m/Y') }}</td>
+                  <td class="text-truncate" style="max-width: 150px; overflow: hidden; white-space: nowrap;">{{ $requisition->Assure }}</td>
+                  <td>{{ $requisition->NoPolice}}</td>
+                  <td>{{ $requisition->NoSinistre}}</td>
+                  <td>{{ \Carbon\Carbon::parse($requisition->DateSinistre)->format('d/m/Y') }}</td>
+                  <td  class="text-truncate" style="max-width: 150px; overflow: hidden; white-space: nowrap;">{{ $requisition->Nom}} {{ $requisition->Prenom}}</td>
                   <td class="text-center">
                   @if ((session('username') == $requisition->CodeComp . $requisition->CodeClient))
                       <i class="bi bi-file-earmark-pdf"></i>
@@ -1437,8 +1483,13 @@ section {
             @endforelse
             </tbody>
           </table>
+          <!-- Liens de pagination -->
+          <div class="d-flex justify-content-center">
+              {{ $requisitions->links() }}
+          </div>
         </div>
       </div>
+  
     </section><!-- End Services Section -->
 
    
@@ -1461,18 +1512,18 @@ section {
                         <span class="input-group-text font-weight-bold">Structure :</span>
                     </div>
                     <input type="hidden" name="p" value="detail_inst_par_affaire">
-                    <select name="structure" class="custom-select col-sm-4" required>
+                    <select name="structure" class="form-select col-sm-4" required>
                         <option value='%'>Toutes les structures</option>
                         <!-- Ajouter ici les options de structures dynamiques -->
                     </select>
-                    <select name="branche" class="custom-select col-sm-2" required>
+                    <select name="branche" class="form-select col-sm-2" required>
                         <option value="1">Automobile</option>
                         <option value="2">IARD</option>
                         <option value="3" >Transport</option>
                     </select>
-                    <select name="mois" class="custom-select col-sm-2" required>
+                    <select name="mois" class="form-select col-sm-2" required>
                          </select>
-                    <select name="annee" class="custom-select col-sm-2" required>
+                    <select name="annee" class="form-select col-sm-2" required>
                      </select>
                     <button type="submit" class="form-control btn-success col-sm-2">Afficher&nbsp;&nbsp;<i class="bi bi-binoculars-fill"></i></button>
                 </div>
@@ -1659,7 +1710,7 @@ section {
         <h2>Profile</h2>
         <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
       </div>
-      <form action="{{ route('update-profile') }}" method="POST">
+      <form action="{{ route('test') }}" method="GET">
       @csrf
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <div class="card h-100">
@@ -1675,7 +1726,7 @@ section {
                     <div class="form-group">
                       <label for="fullName">Full Name</label>
                       <input type="text" class="form-control" id="fullName" name="full_name" 
-                      value="{{ old('full_name', $client->CodeComp . $client->CodeClient) }}" placeholder="Enter full name">
+                      value="{{ old('full_name', $client->CodeComp . $client->CodeClient) }}" placeholder="Enter full name" disabled>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -1694,9 +1745,9 @@ section {
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                      <label for="website">Website URL</label>
-                      <input type="url" class="form-control" id="website"  name="website" 
-                      value="{{ old('website', $client->website) }}" placeholder="Website url">
+                      <label for="Website">Website URL</label>
+                      <input type="url" class="form-control" id="Website"  name="Website" 
+                      value="{{ old('Website', $client->Website) }}" placeholder="Website url" disabled>
                     </div>
                   </div>
                 </div>
@@ -1781,3 +1832,4 @@ section {
 </body>
 
 </html>
+@endif

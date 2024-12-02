@@ -38,7 +38,9 @@ class AuthController extends Controller
             // Démarrer une session
             session([
                 'username' => $user->Username,
-                
+                'compagnie' => $user->CodeComp,
+                'agence' => $user->CodeClient,
+                'designation' => $user->Designation,
             ]);
 
             // Redirection après succès
@@ -49,9 +51,13 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        session()->flush(); // Détruire toutes les données de session
-        return redirect()->route('');
+        auth()->logout();  // Déconnecter l'utilisateur
+        $request->session()->invalidate();  // Invalider la session
+        $request->session()->regenerateToken();  // Régénérer le token CSRF
+
+        return redirect()->route('login');  // Rediriger l'utilisateur vers la page de connexion
     }
+
 }

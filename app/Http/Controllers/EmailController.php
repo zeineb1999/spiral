@@ -54,7 +54,7 @@ class EmailController extends Controller
         $userMessage = $validated['message'];
 
         // Envoyer l'email sans pièce jointe
-        Mail::to('zeineb.ara@hotmail.fr')->send(new TestEmailSansFichier($name, $email, $subject, $userMessage));
+        Mail::to('support@exal.dz')->send(new TestEmailSansFichier($name, $email, $subject, $userMessage));
 
         // Retourner un message de succès
         return redirect()->back()->with('success', 'Message envoyé avec succès!');

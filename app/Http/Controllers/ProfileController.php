@@ -5,20 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client; // Si vous utilisez un modèle Client
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
     // Afficher le profil
     public function showProfile()
     {
-        // Récupérer le 'username' à partir de la session
         $username = session('username');
-        // Récupérer le client dont le 'username' est égal à la variable de session 'username'
-        $client = DB::table('client')
-        ->where('client.Username', $username);
-        dd($client);
-        // Retourner la vue 'profile' avec les données du client
-        return view('profile', compact('client'));
+        return DB::table('client')->where('username', $username)->first();
     }
 
     // Mettre à jour les informations du profil

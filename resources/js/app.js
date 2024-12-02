@@ -17,6 +17,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import PureCounter from '@srexi/purecounterjs';
 
+
 // Initialiser PureCounter
 new PureCounter();
 
@@ -282,3 +283,54 @@ new PureCounter();
     new PureCounter();
   
   })()
+  $(document).ready(function(){
+    $('#date1').datepicker({
+        format: 'dd-mm-yyyy', // Le format que vous souhaitez
+        autoclose: true
+    });
+});
+
+
+
+$(document).ready(function () {
+  $('#filterButton').on('click', function () {
+      // Récupérer les valeurs des champs
+      let structure = $('#structure').val();
+      let branche = $('#branche').val();
+      let date1 = $('#date1').val();
+      let date2 = $('#date2').val();
+      let filterUrl = "/requisitions/filter";
+      
+      // Envoyer la requête AJAX
+      $.ajax({
+          url: filterUrl, // URL générée par Ziggy ou une route nommée
+          type: 'GET',
+          data: {
+              structure: structure,
+              branche: branche,
+              date1: date1,
+              date2: date2
+          },
+          success: function (response) {
+              // Mettre à jour uniquement le tableau
+              console.log("les donnees recus");
+              $('#myTable').html(response.html);
+          },
+          error: function () {
+              alert('Une erreur est survenue. Veuillez réessayer.');
+          }
+      });
+  });
+});
+
+
+
+// Filtres pour la table
+$(document).ready(function () {
+  $("#myInput").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+  });
+});
