@@ -62,13 +62,64 @@ class RequisitionController extends Controller
             ->orderBy('r.Branche', 'desc')
             ->orderBy('r.NoReq', 'desc');
 
-        $requisitions = $query->paginate(20);
+        $requisitions = $query->paginate(10);
         
 
         return response()->json([
             'html' => view('requisitions', compact('requisitions'))->render(),
+            'pagination' => (string) $requisitions->links(), // Générer les liens de pagination
         ]);
     }
+    public function fetchRequisitions(Request $request)
+    {
+        $requisitions = DB::table('requisition as r')
+            ->join('structure as s', 'r.Structure', '=', 's.Code')
+            ->join('employe as e', 'r.Expert', '=', 'e.IdEmploye')
+            ->where('r.CodeComp', session('compagnie'))
+            ->where('r.CodeClient', session('agence'))
+            ->where('r.Branche', 1)
+            ->orderBy('r.Structure', 'asc')
+            ->orderBy('r.Exercice', 'desc')
+            ->orderBy('r.Branche', 'desc')
+            ->orderBy('r.NoReq', 'desc')
+            ->paginate(10);
+
+        return response()->json([
+            'html' => view('requisitions', compact('requisitions'))->render(),
+            'pagination' => (string)$requisitions->links(),
+        ]);
+    }
+    public function advancedSearch(Request $request)
+    {
+        $query = DB::table('requisition as r')
+            ->join('structure as s', 'r.Structure', '=', 's.Code')
+            ->join('employe as e', 'r.Expert', '=', 'e.IdEmploye');
+
+        // Filtrage basé sur les critères de recherche
+        if ($request->filled('assure')) {
+            $query->where('r.Assure', 'LIKE', '%' . $request->assure . '%');
+        }
+
+        if ($request->filled('Branche')) {
+            $query->where('r.Branche', $request->branche);
+        }
+
+        if ($request->filled('DateSinistre')) {
+            $query->whereDate('r.DateSinistre', '>=', $request->dateSinistre);
+        }
+
+        // Pagination
+        $requisitions = $query->paginate(10);
+
+        // Renvoi des résultats de recherche sous forme de JSON
+        $requisitionsHTML = view('requisitions', ['requisitions' => $requisitions])->render();
+
+        return response()->json([
+            'requisitionsHTML' => $requisitionsHTML,
+            'pagination' => $requisitions->links()->render()
+        ]);
+    }
+
 
 
 }

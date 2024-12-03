@@ -8,7 +8,7 @@
 
   <title>Portail exass</title>
   <meta content="" name="description">
-  <meta content="" name="keywords">
+  <meta content="" name="assures">
 
   <!-- Favicons -->
   <link href="images/favicon.png" rel="icon">
@@ -42,6 +42,7 @@
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link rel="preload" href="https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
     <!-- CSS -->
@@ -169,7 +170,7 @@ h6 {
 #header .profile img {
   margin: 15px auto;
   display: block;
-  width: 80px;
+  width: 50px;
   
 }
 
@@ -269,7 +270,7 @@ h6 {
   display: flex;
   align-items: center;
   color: #a8a9b4;
-  padding: 12px 15px;
+  padding: 8px 15px;
   margin-bottom: 8px;
   transition: 0.3s;
   font-size: 15px;
@@ -1254,7 +1255,23 @@ section {
   border: none;
   cursor: pointer;
 }
-        
+  /*-----------------------------------
+  recherhe avance
+  -------------------------*/      
+  .bg-gradient-primary {
+        background: linear-gradient(90deg, #007bff, #6610f2);
+    }
+    .shadow {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    @media (max-width: 576px) {
+        .form-label {
+            font-size: 0.9rem;
+        }
+        .btn {
+            font-size: 0.85rem;
+        }
+    }
   </style>
 </head>
 
@@ -1314,8 +1331,9 @@ section {
       <p>Expertise <span class="typed" data-typed-items="Automobile, Industrie et batiment, Transport et maritime, Évaluation, Réforme"></span></p>
     </div>
   </section><!-- End Hero -->
-
+     <!-- ======= Contenu ======= -->
   <main id="main">
+    <!-- =======Expertise a distance======= -->
     <section id="skills" class="skills">
       <div class="container">
         <div class="section-title">
@@ -1382,7 +1400,7 @@ section {
     </section>
 
   
-    <!-- ======= Services Section ======= -->
+    <!-- ======= Requisitions ======= -->
     <section id="services" class="services section-bg ">
 
       <div class="container">
@@ -1445,51 +1463,139 @@ section {
             </thead>
             <tbody id="myTable">
 
-            @forelse ($requisitions as $requisition)
-              <tr class="{{ $requisition->Annulation ? 'text-decoration-line-through' : '' }}">
-                  
-                  <td>
-                      <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $requisition->Abreviation }}">
-                          {{ $requisition->Structure }}
-                      </span>
-                  </td>
-
-                  <td>{{ $requisition->Structure}}/{{ $requisition->Exercice}}/{{ $requisition->Branche}}/{{ $requisition->NoReq}}/{{ $requisition->Objet }}</td>
-                  <td> {{ \Carbon\Carbon::parse($requisition->DateEnreg)->format('d/m/Y') }}</td>
-                  <td class="text-truncate" style="max-width: 150px; overflow: hidden; white-space: nowrap;">{{ $requisition->Assure }}</td>
-                  <td>{{ $requisition->NoPolice}}</td>
-                  <td>{{ $requisition->NoSinistre}}</td>
-                  <td>{{ \Carbon\Carbon::parse($requisition->DateSinistre)->format('d/m/Y') }}</td>
-                  <td  class="text-truncate" style="max-width: 150px; overflow: hidden; white-space: nowrap;">{{ $requisition->Nom}} {{ $requisition->Prenom}}</td>
-                  <td class="text-center">
-                  @if ((session('username') == $requisition->CodeComp . $requisition->CodeClient))
-                      <i class="bi bi-file-earmark-pdf"></i>
-                  @else
-                      <i class="bi bi-dash-lg"></i>
-                  @endif
-                  </td>
-                  <td class="text-center">
-                  @if ((session('username') == $requisition->CodeComp . $requisition->CodeClient))
-                      <i class="bi bi-file-earmark-pdf"></i>
-                  @else
-                      <i class="bi bi-dash-lg"></i>
-                  @endif
-                  </td>
-              </tr>
-            @empty
-              <tr>
-                  <td colspan="10" class="text-center">Aucune réquisition trouvée.</td>
-              </tr>
-            @endforelse
+            @include('requisitions', ['requisitions' => $requisitions])
             </tbody>
           </table>
+       
           <!-- Liens de pagination -->
-          <div class="d-flex justify-content-center">
-              {{ $requisitions->links() }}
+          <div class="d-flex justify-content-center" id="pagination-links">
+            {!! $requisitions->links() !!}
           </div>
+
         </div>
       </div>
-  
+      <section id="recherche" class="recherche">
+        <div class="container">
+
+          <div class="section-title">
+            <h2>Recherche avancée <i class="bi bi-search"></i></h2>
+            <p>La recherche avancée est une recherche ciblée, combinant plusieurs critères de recherche.</p>
+          </div>
+
+          <div class="container mt-5">
+            <div class="card shadow">
+                <div class="card-header bg-gradient-primary text-white text-center">
+                    <h5 class="mb-0">Recherche Avancée</h5>
+                </div>
+                <div class="card-body">
+                    <form id="advancedSearchForm">
+                        <div class="row g-3">
+                            <!-- Assuré -->
+                            <div class="col-md-6 col-lg-4">
+                                <label for="assure" class="form-label">Assuré</label>
+                                <input type="text" class="form-control" id="assure" name="assure" placeholder="Assuré ">
+                            </div>
+
+
+                            <!-- Branche -->
+                            <div class="col-md-6 col-lg-4">
+                                <label for="Branche" class="form-label">Branche</label>
+                                <select class="form-select" id="Branche" name="Branche">
+                                    <option value="1">Automobile</option>
+                                    <option value="2">I.A.R.D</option>
+                                    <option value="3">Trasport</option>
+                                </select>
+                            </div>
+                            <!-- N MATRICULE -->
+                            <div class="col-md-6 col-lg-4">
+                                <label for="Immatricule" class="form-label">Immatricule</label>
+                                <input type="text" class="form-control" id="Immatricule" name="Immatricule" placeholder="ex : #####-###-##">
+                            </div>
+                            
+                            <!-- N sinistre -->
+                            <div class="col-md-6 col-lg-4">
+                                <label for="sinistre" class="form-label">N° sinistre</label>
+                                <input type="text" class="form-control" id="sinistre" name="sinistre" placeholder="N° sinistre">
+                            </div>
+                            <!-- Date de début -->
+                            <div class="col-md-6 col-lg-4">
+                                <label for="DateSinistre" class="form-label">Date sinistre</label>
+                                <input type="date" class="form-control" id="DateSinistre" name="DateSinistre">
+                            </div>
+                            <!-- ordre -->
+                            <div class="col-md-6 col-lg-4">
+                                <label for="Ordre" class="form-label">Ordre</label>
+                                <select class="form-select" id="Ordre" name="Ordre">
+                                    <option value="asc">ASC</option>
+                                    <option value="desc" selected>DESC</option>
+                                </select>
+                            </div>
+                            <!-- limit-->
+                            <div class="col-md-6 col-lg-4">
+                                <label for="Limite" class="form-label">Limite</label>
+                                <select class="form-select" id="Limite" name="Limite">
+                                    <option value="10" selected>10</option>
+                                    <option value="aucune">aucune</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            
+
+                            <!-- Boutons -->
+                            <div class="col-12 text-center mt-3">
+                                <button type="reset" class="btn btn-outline-secondary me-2">Réinitialiser</button>
+                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+          </div>
+        </div>
+
+    
+      </section><!-- End Facts Section -->
+      <section id="advancedSearchResults" class="mt-4" style="display:none;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Résultats de la recherche avancée</h2>
+            </div>
+
+            <div id="searchResults">
+                <div class="row">
+                    <!-- Résultats de recherche ici -->
+                </div>
+                <div id="requisitionsResults" class="table-responsive mt-4">
+                    <table class="table table-striped table-hover table-bordered table-sm">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Centre</th>
+                                <th>N° Rapport</th>
+                                <th>Date</th>
+                                <th>Affaire</th>
+                                <th>N° police</th>
+                                <th>N° sinistre</th>
+                                <th>Date sin.</th>
+                                <th>Expert</th>
+                                <th>Rapport</th>
+                                <th>Fact.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requisitionsTableBody">
+                            <!-- Requisitions correspondantes ici -->
+                        </tbody>
+                    </table>
+                    <div id="paginationLinks"></div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+              <a href="#" class="btn btn-secondary" id="toggleRechercheBtn">Voir la recherche avancée</a>
+            </div>
+        </div>
+      </section>
+
     </section><!-- End Services Section -->
 
    
@@ -1717,16 +1823,16 @@ section {
               <div class="card-body">
                 <div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mb-2 text-primary">Personal Details</h6>
+                    <h6 class="mb-2 text-primary">Détails Personnel</h6>
                   </div>
                   @if(isset($client) && $client->CodeComp && $client->CodeClient)
     
 
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                      <label for="fullName">Full Name</label>
+                      <label for="fullName">Agence</label>
                       <input type="text" class="form-control" id="fullName" name="full_name" 
-                      value="{{ old('full_name', $client->CodeComp . $client->CodeClient) }}" placeholder="Enter full name" disabled>
+                      value="{{ old('full_name', $client->CodeComp . ' ' . $client->CodeClient)  }}" placeholder="Enter full name" disabled>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -1738,25 +1844,25 @@ section {
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                      <label for="Tel">Phone</label>
+                      <label for="Tel">Téléphone</label>
                       <input type="text" class="form-control" id="Tel"  name="Tel" 
                       value="{{ old('Tel', $client->Tel) }}" placeholder="Enter phone number">
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                      <label for="Website">Website URL</label>
+                      <label for="Website">Site web URL</label>
                       <input type="url" class="form-control" id="Website"  name="Website" 
                       value="{{ old('Website', $client->Website) }}" placeholder="Website url" disabled>
                     </div>
                   </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                    <h6 class="mt-3 mb-2 text-primary">Adresse</h6>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                      <label for="Adresse">Street</label>
+                      <label for="Adresse">Adresse</label>
                       <input type="name" class="form-control" id="Adresse"  name="Adresse" 
                       value="{{ old('Adresse', $client->Adresse) }}" placeholder="Enter Adresse">
                     </div>
@@ -1796,8 +1902,8 @@ section {
                 <div class="mt-4  row gutters ">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="text-right">
-                      <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-                      <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                      <button type="button" id="submit" name="submit" class="btn btn-secondary">Annuler</button>
+                      <button type="button" id="submit" name="submit" class="btn btn-primary">Modifier</button>
                     </div>
                   </div>
                 </div>

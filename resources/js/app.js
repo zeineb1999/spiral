@@ -291,7 +291,7 @@ new PureCounter();
 });
 
 
-
+//pour filtrer
 $(document).ready(function () {
   $('#filterButton').on('click', function () {
       // Récupérer les valeurs des champs
@@ -313,19 +313,22 @@ $(document).ready(function () {
           },
           success: function (response) {
               // Mettre à jour uniquement le tableau
-              console.log("les donnees recus");
+             
               $('#myTable').html(response.html);
+              $('#pagination-links').html(response.pagination);
           },
           error: function () {
               alert('Une erreur est survenue. Veuillez réessayer.');
           }
       });
   });
+ 
 });
 
 
 
-// Filtres pour la table
+
+// Filtres pour la table rechercher par mots
 $(document).ready(function () {
   $("#myInput").on("keyup", function () {
       var value = $(this).val().toLowerCase();
@@ -333,4 +336,69 @@ $(document).ready(function () {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
       });
   });
+});
+
+
+//pagination
+$(document).on('click', '.pagination a', function(event) {
+  event.preventDefault();
+
+  let page = $(this).attr('href').split('page=')[1];
+  fetchRequisitions(page);
+});
+
+function fetchRequisitions(page) {
+  $.ajax({
+      url: `/requisitions?page=${page}`,
+      type: 'GET',
+      success: function(response) {
+          $('#myTable').html(response.html);
+          $('#pagination-links').html(response.pagination);
+      },
+      error: function() {
+          alert('Une erreur s\'est produite lors de la récupération des données.');
+      }
+  });
+}
+
+//recherche avancée
+$(document).ready(function () {
+  // Fonction pour exécuter la recherche avancée
+  $('#advancedSearchForm').on('submit', function (event) {
+      event.preventDefault(); // Empêche la soumission traditionnelle
+
+      let formData = $(this).serialize(); // Sérialise les données du formulaire
+
+      // Envoi de la requête AJAX
+      $.ajax({
+          url: '/requisitions/advanced-search', // Route pour la recherche avancée
+          type: 'GET',
+          data: formData,
+          success: function (response) {
+              // Affichage des résultats de la recherche
+              $('#recherche').hide();
+              $('#advancedSearchResults').show();
+              $('#requisitionsTableBody').html(response.requisitionsHTML); // Insérer les lignes des requêtes dans la table
+              $('#paginationLinks').html(response.pagination); // Insérer la pagination
+          },
+          error: function () {
+              alert("Une erreur s'est produite lors de la recherche.");
+          }
+      });
+  });
+
+  // Gestion de la pagination
+  $(document).on('click', '#paginationLinks a', function (event) {
+      event.preventDefault();
+      let page = $(this).attr('href').split('page=')[1];
+      performSearch(page); // Relancer la recherche avec la nouvelle page
+  });
+
+ 
+});
+
+ $('#toggleRechercheBtn').click(function (e) {
+    e.preventDefault();  // Empêcher l'action par défaut du lien
+    $('#advancedSearchResults').hide();  // Masquer les résultats
+    $('#recherche').fadeIn();  // Afficher la recherche avancée
 });

@@ -32,3 +32,5 @@ Route::get('/send-message', function () {
 Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
 //Route::get('/requisitions', [RequisitionController::class, 'filter']);
 Route::get('/requisitions/filter', [RequisitionController::class, 'filter'])->name('requisitions.filter');
+Route::get('/requisitions', [RequisitionController::class, 'fetchRequisitions'])->name('requisitions.fetch');
+Route::get('/requisitions/advanced-search', [RequisitionController::class, 'advancedSearch'])->name('requisitions.advancedSearch');
