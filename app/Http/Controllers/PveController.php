@@ -3,19 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class PveController extends Controller
 {
     public function show($id)
-    {
+    {   
         // Récupérez les données nécessaires depuis votre base de données
-        $requisition = Requisition::find($id); // Modifiez selon votre modèle
-        $car = $requisition->carData; // Exemple : données sur le véhicule
-        $chocs = $requisition->chocsData; // Exemple : données sur les chocs
-        $fournitures = $requisition->fournituresData; // Exemple : données des fournitures
-        $rowRep = $requisition->repairSummary; // Exemple : résumé des réparations
-
+        $requisition = DB::table('requisition as r')
+        ->where('r.NoReq', $id)
+        ->first();
+       
+       
         // Envoyez les données à la vue
-        return view('pve.show', compact('requisition', 'car', 'chocs', 'fournitures', 'rowRep'));
+        return view('pve.show', compact('requisition'));
     }
 }

@@ -28,10 +28,10 @@
     <table>
         <tr>
             <td>
-                @if($requisition->has_intro)
+                @if($requisition->NoReq)
                     <table>
                         <tr>
-                            <td>{!! nl2br(e($requisition->intro)) !!}</td>
+                            <td>{!! nl2br(e($requisition->NoReq)) !!}</td>
                         </tr>
                     </table>
                 @endif
@@ -40,22 +40,7 @@
                     <tr>
                         <td colspan="6" class="title center">CARACTÉRISTIQUES DU VÉHICULE</td>
                     </tr>
-                    <tr>
-                        <td>Immatricule :</td>
-                        <td>{{ $car['immatricule'] }}</td>
-                        <td>Genre :</td>
-                        <td>{{ $car['genre'] }}</td>
-                        <td>Carrosserie :</td>
-                        <td>{{ $car['carrosserie'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>Marque :</td>
-                        <td>{{ $car['marque'] }}</td>
-                        <td>Modèle :</td>
-                        <td>{{ $car['modele'] }}</td>
-                        <td>Énergie :</td>
-                        <td>{{ $car['energie'] }} ({{ $car['puissance'] }} CV)</td>
-                    </tr>
+                    
                     <!-- Continuez avec les autres champs -->
                 </table>
 
@@ -64,33 +49,10 @@
                     <tr>
                         <td class="title">CONSTAT</td>
                     </tr>
-                    <tr>
-                        <td>{!! nl2br(e($requisition->constat)) !!}</td>
-                    </tr>
+                    
                 </table>
 
-                <!-- Réforme -->
-                @if($requisition->has_reforme)
-                    <table>
-                        <tr>
-                            <td>Valeur du véhicule :</td>
-                            <td>{{ number_format($requisition->valeur_vehicule, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Valeur épave :</td>
-                            <td>{{ number_format($requisition->valeur_epave, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Montant préjudice :</td>
-                            <td>{{ number_format($requisition->montant_prejudice, 2) }}</td>
-                        </tr>
-                    </table>
-                @endif
-
-                <!-- QR Code -->
-                @if(isset($requisition->qrcode))
-                    <img src="data:image/png;base64,{{ $requisition->qrcode }}" alt="QR Code" width="80" height="80">
-                @endif
+               
 
                 <p><button class="button" onClick="window.print();">Imprimer</button></p>
             </td>
