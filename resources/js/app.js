@@ -375,11 +375,16 @@ $(document).ready(function () {
           type: 'GET',
           data: formData,
           success: function (response) {
-              // Affichage des résultats de la recherche
-              $('#recherche').hide();
-              $('#advancedSearchResults').show();
-              $('#requisitionsTableBody').html(response.requisitionsHTML); // Insérer les lignes des requêtes dans la table
-              $('#paginationLinks').html(response.pagination); // Insérer la pagination
+            //console.log('Réponse reçue :', response); // Vérifiez le contenu complet de la réponse
+            if (response.html.trim()) {
+                $('#recherche').hide();
+                $('#advancedSearchResults').show();
+                $('#requisitionsTableBody').html(response.html); // Insérer les lignes
+                $('#paginationLinks').html(response.pagination); // Insérer la pagination
+                //console.log('Lignes insérées :', $('#requisitionsTableBody').html());
+            } else {
+                alert('Aucun résultat trouvé.');
+            }
           },
           error: function () {
               alert("Une erreur s'est produite lors de la recherche.");
@@ -389,11 +394,26 @@ $(document).ready(function () {
 
   // Gestion de la pagination
   $(document).on('click', '#paginationLinks a', function (event) {
-      event.preventDefault();
-      let page = $(this).attr('href').split('page=')[1];
-      performSearch(page); // Relancer la recherche avec la nouvelle page
+    event.preventDefault();
+    let url = $(this).attr('href');  // Récupère l'URL complète
+    //console.log('URL de pagination:', url);  // Affiche l'URL
+    let page = url.split('page=')[1];  // Extrait le numéro de page
+    //console.log('Numéro de page:', page);  // Affiche le numéro de page
+    fetchRequisitionsAvance(page);  // Relance la recherche avec le numéro de page
   });
-
+  function fetchRequisitionsAvance(page) {
+    $.ajax({
+        url: `/requisitionsAvance?page=${page}`,
+        type: 'GET',
+        success: function(response) {
+            $('#requisitionsTableBody').html(response.html);
+            $('#paginationLinks').html(response.pagination);
+        },
+        error: function() {
+            alert('Une erreur s\'est produite lors de la récupération des données.');
+        }
+    });
+  }
  
 });
 

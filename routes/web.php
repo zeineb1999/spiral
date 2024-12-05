@@ -34,3 +34,4 @@ Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('upda
 Route::get('/requisitions/filter', [RequisitionController::class, 'filter'])->name('requisitions.filter');
 Route::get('/requisitions', [RequisitionController::class, 'fetchRequisitions'])->name('requisitions.fetch');
 Route::get('/requisitions/advanced-search', [RequisitionController::class, 'advancedSearch'])->name('requisitions.advancedSearch');
+Route::get('/requisitionsAvance', [RequisitionController::class, 'fetchRequisitionsAvance'])->name('requisitions.fetchAvance');

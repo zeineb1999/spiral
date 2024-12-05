@@ -42,7 +42,7 @@
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link rel="preload" href="https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap">
 
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
     <!-- CSS -->
@@ -54,7 +54,12 @@
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
+    <!-- Inclure jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- Inclure jQuery UI (contenant datepicker) -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
     @vite('resources/js/app.js')
     @routes
@@ -84,7 +89,7 @@
 # General
 --------------------------------------------------------------*/
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans",Arial, sans-serif;
   color: #272829;
 }
 
@@ -1329,6 +1334,11 @@ section {
     <div class="hero-container" data-aos="fade-in">
       <h1>EXAL SPA</h1>
       <p>Expertise <span class="typed" data-typed-items="Automobile, Industrie et batiment, Transport et maritime, Évaluation, Réforme"></span></p>
+      <!-- Liens vers les sections -->
+      
+      <a href="#centres" class="hero-link">Nos centres</a>
+      <a href="#experts" class="hero-link">Nos experts</a>
+      
     </div>
   </section><!-- End Hero -->
      <!-- ======= Contenu ======= -->
@@ -1474,6 +1484,7 @@ section {
 
         </div>
       </div>
+      <!-- ======= Recherche avancée ======= -->
       <section id="recherche" class="recherche">
         <div class="container">
 
@@ -1499,8 +1510,8 @@ section {
 
                             <!-- Branche -->
                             <div class="col-md-6 col-lg-4">
-                                <label for="Branche" class="form-label">Branche</label>
-                                <select class="form-select" id="Branche" name="Branche">
+                                <label for="branche" class="form-label">Branche</label>
+                                <select class="form-select" id="branche" name="branche">
                                     <option value="1">Automobile</option>
                                     <option value="2">I.A.R.D</option>
                                     <option value="3">Trasport</option>
@@ -1519,8 +1530,8 @@ section {
                             </div>
                             <!-- Date de début -->
                             <div class="col-md-6 col-lg-4">
-                                <label for="DateSinistre" class="form-label">Date sinistre</label>
-                                <input type="date" class="form-control" id="DateSinistre" name="DateSinistre">
+                                <label for="dateSinistre" class="form-label">Date sinistre</label>
+                                <input type="date" class="form-control" id="dateSinistre" name="dateSinistre">
                             </div>
                             <!-- ordre -->
                             <div class="col-md-6 col-lg-4">
@@ -1586,7 +1597,9 @@ section {
                             <!-- Requisitions correspondantes ici -->
                         </tbody>
                     </table>
-                    <div id="paginationLinks"></div>
+                    <div id="paginationLinks">
+                      {!! $requisitions->links() !!}
+                    </div>
                 </div>
             </div>
             
@@ -1810,109 +1823,125 @@ section {
     
    
 
-  <section id="portfolio" class="portfolio section-bg">
-    <div class="container">
-      <div class="section-title">
-        <h2>Profile</h2>
-        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-      </div>
-      <form action="{{ route('test') }}" method="GET">
-      @csrf
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <div class="card h-100">
-              <div class="card-body">
-                <div class="row gutters">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mb-2 text-primary">Détails Personnel</h6>
-                  </div>
-                  @if(isset($client) && $client->CodeComp && $client->CodeClient)
-    
+    <section id="portfolio" class="portfolio section-bg">
+      <div class="container">
+        <div class="section-title">
+          <h2>Profile</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+        <form action="{{ route('test') }}" method="GET">
+        @csrf
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                  <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <h6 class="mb-2 text-primary">Détails Personnel</h6>
+                    </div>
+                    @if(isset($client) && $client->CodeComp && $client->CodeClient)
+      
 
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="fullName">Agence</label>
-                      <input type="text" class="form-control" id="fullName" name="full_name" 
-                      value="{{ old('full_name', $client->CodeComp . ' ' . $client->CodeClient)  }}" placeholder="Enter full name" disabled>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="fullName">Agence</label>
+                        <input type="text" class="form-control" id="fullName" name="full_name" 
+                        value="{{ old('full_name', $client->CodeComp . ' ' . $client->CodeClient)  }}" placeholder="Enter full name" disabled>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="Email" class="form-control" id="Email" name="email" 
+                        value="{{ old('Email', $client->Email) }}" placeholder="Enter email ID">
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="Tel">Téléphone</label>
+                        <input type="text" class="form-control" id="Tel"  name="Tel" 
+                        value="{{ old('Tel', $client->Tel) }}" placeholder="Enter phone number">
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="Website">Site web URL</label>
+                        <input type="url" class="form-control" id="Website"  name="Website" 
+                        value="{{ old('Website', $client->Website) }}" placeholder="Website url" disabled>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="Email">Email</label>
-                      <input type="Email" class="form-control" id="Email" name="email" 
-                      value="{{ old('Email', $client->Email) }}" placeholder="Enter email ID">
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="Tel">Téléphone</label>
-                      <input type="text" class="form-control" id="Tel"  name="Tel" 
-                      value="{{ old('Tel', $client->Tel) }}" placeholder="Enter phone number">
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="Website">Site web URL</label>
-                      <input type="url" class="form-control" id="Website"  name="Website" 
-                      value="{{ old('Website', $client->Website) }}" placeholder="Website url" disabled>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mt-3 mb-2 text-primary">Adresse</h6>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="Adresse">Adresse</label>
-                      <input type="name" class="form-control" id="Adresse"  name="Adresse" 
-                      value="{{ old('Adresse', $client->Adresse) }}" placeholder="Enter Adresse">
-                    </div>
-                </div>
-                @else
-                <p>Client information is missing.</p>
-                @endif
-                <!--<div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                      <h6 class="mt-3 mb-2 text-primary">Adresse</h6>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="Street">Street</label>
-                      <input type="name" class="form-control" id="Street" placeholder="Enter Street">
+                      <div class="form-group">
+                        <label for="Adresse">Adresse</label>
+                        <input type="name" class="form-control" id="Adresse"  name="Adresse" 
+                        value="{{ old('Adresse', $client->Adresse) }}" placeholder="Enter Adresse">
+                      </div>
+                  </div>
+                  @else
+                  <p>Client information is missing.</p>
+                  @endif
+                  <!--<div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="Street">Street</label>
+                        <input type="name" class="form-control" id="Street" placeholder="Enter Street">
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="ciTy">City</label>
+                        <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="sTate">State</label>
+                        <input type="text" class="form-control" id="sTate" placeholder="Enter State">
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="zIp">Zip Code</label>
+                        <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+                      </div>
+                    </div>
+                  </div>-->
+                  <div class="mt-4  row gutters ">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="text-right">
+                        <button type="button" id="submit" name="submit" class="btn btn-secondary">Annuler</button>
+                        <button type="button" id="submit" name="submit" class="btn btn-primary">Modifier</button>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="ciTy">City</label>
-                      <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="sTate">State</label>
-                      <input type="text" class="form-control" id="sTate" placeholder="Enter State">
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="zIp">Zip Code</label>
-                      <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
-                    </div>
-                  </div>
-                </div>-->
-                <div class="mt-4  row gutters ">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="text-right">
-                      <button type="button" id="submit" name="submit" class="btn btn-secondary">Annuler</button>
-                      <button type="button" id="submit" name="submit" class="btn btn-primary">Modifier</button>
-                    </div>
-                  </div>
-                </div>
-              </div>           
-          </div>
-        </div>           
-      </form>
-    </div>
-  </section>
+                </div>           
+            </div>
+          </div>           
+        </form>
+      </div>
+    </section>
+    <section id="centres" class="centres section-bg">
+      <div class="container">
+        <div class="section-title">
+          <h2>Nos centres</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+      </div>
+    </section>
+    <section id="experts" class="centres section-bg">
+      <div class="container">
+        <div class="section-title">
+          <h2>Nos Experts</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+      </div>
+    </section>
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->

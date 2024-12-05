@@ -89,34 +89,55 @@ class RequisitionController extends Controller
             'pagination' => (string)$requisitions->links(),
         ]);
     }
+    public function fetchRequisitionsAvance(Request $request)
+    {
+        $requisitions = DB::table('requisition as r')
+            ->join('structure as s', 'r.Structure', '=', 's.Code')
+            ->join('employe as e', 'r.Expert', '=', 'e.IdEmploye')
+            ->where('r.CodeComp', session('compagnie'))
+            ->where('r.CodeClient', session('agence'))
+            ->where('r.Branche', 1)
+            ->orderBy('r.Structure', 'asc')
+            ->orderBy('r.Exercice', 'desc')
+            ->orderBy('r.Branche', 'desc')
+            ->orderBy('r.NoReq', 'desc')
+            ->paginate(10);
+
+        return response()->json([
+            'html' => view('requisitions', compact('requisitions'))->render(),
+            'pagination' => (string)$requisitions->links(),
+        ]);
+    }
     public function advancedSearch(Request $request)
     {
         $query = DB::table('requisition as r')
             ->join('structure as s', 'r.Structure', '=', 's.Code')
-            ->join('employe as e', 'r.Expert', '=', 'e.IdEmploye');
-
+            ->join('employe as e', 'r.Expert', '=', 'e.IdEmploye')
+            ->where('r.CodeComp', session('compagnie'))
+            ->where('r.CodeClient', session('agence'));
         // Filtrage basé sur les critères de recherche
         if ($request->filled('assure')) {
             $query->where('r.Assure', 'LIKE', '%' . $request->assure . '%');
         }
 
-        if ($request->filled('Branche')) {
+        if ($request->filled('branche')) {
             $query->where('r.Branche', $request->branche);
         }
 
-        if ($request->filled('DateSinistre')) {
+        if ($request->filled('dateSinistre')) {
             $query->whereDate('r.DateSinistre', '>=', $request->dateSinistre);
         }
-
+        $query->orderBy('r.Structure', 'asc')
+            ->orderBy('r.Exercice', 'desc')
+            ->orderBy('r.Branche', 'desc')
+            ->orderBy('r.NoReq', 'desc');
         // Pagination
         $requisitions = $query->paginate(10);
-
-        // Renvoi des résultats de recherche sous forme de JSON
-        $requisitionsHTML = view('requisitions', ['requisitions' => $requisitions])->render();
-
+        
+        //dd($requisitions);
         return response()->json([
-            'requisitionsHTML' => $requisitionsHTML,
-            'pagination' => $requisitions->links()->render()
+            'html' => view('requisitions', compact('requisitions'))->render(),
+            'pagination' => (string) $requisitions->links(), // Générer les liens de pagination
         ]);
     }
 
