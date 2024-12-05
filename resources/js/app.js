@@ -339,27 +339,7 @@ $(document).ready(function () {
 });
 
 
-//pagination
-$(document).on('click', '.pagination a', function(event) {
-  event.preventDefault();
 
-  let page = $(this).attr('href').split('page=')[1];
-  fetchRequisitions(page);
-});
-
-function fetchRequisitions(page) {
-  $.ajax({
-      url: `/requisitions?page=${page}`,
-      type: 'GET',
-      success: function(response) {
-          $('#myTable').html(response.html);
-          $('#pagination-links').html(response.pagination);
-      },
-      error: function() {
-          alert('Une erreur s\'est produite lors de la récupération des données.');
-      }
-  });
-}
 
 //recherche avancée
 $(document).ready(function () {
@@ -392,29 +372,7 @@ $(document).ready(function () {
       });
   });
 
-  // Gestion de la pagination
-  $(document).on('click', '#paginationLinks a', function (event) {
-    event.preventDefault();
-    let url = $(this).attr('href');  // Récupère l'URL complète
-    //console.log('URL de pagination:', url);  // Affiche l'URL
-    let page = url.split('page=')[1];  // Extrait le numéro de page
-    //console.log('Numéro de page:', page);  // Affiche le numéro de page
-    fetchRequisitionsAvance(page);  // Relance la recherche avec le numéro de page
-  });
-  function fetchRequisitionsAvance(page) {
-    $.ajax({
-        url: `/requisitionsAvance?page=${page}`,
-        type: 'GET',
-        success: function(response) {
-            $('#requisitionsTableBody').html(response.html);
-            $('#paginationLinks').html(response.pagination);
-        },
-        error: function() {
-            alert('Une erreur s\'est produite lors de la récupération des données.');
-        }
-    });
-  }
- 
+
 });
 
  $('#toggleRechercheBtn').click(function (e) {
@@ -422,3 +380,50 @@ $(document).ready(function () {
     $('#advancedSearchResults').hide();  // Masquer les résultats
     $('#recherche').fadeIn();  // Afficher la recherche avancée
 });
+
+
+
+$(document).on('click', '#pagination-links a', function(event) {
+  event.preventDefault();  // Empêche le comportement par défaut du lien de pagination
+  let page = $(this).attr('href').split('page=')[1];  // Récupère la page à partir de l'URL
+  fetchRequisitions(page);  // Appel pour récupérer les réquisitions de cette page
+});
+
+function fetchRequisitions(page) {
+  $.ajax({
+      url: `/requisitions?page=${page}`,  // URL de la pagination des réquisitions
+      type: 'GET',
+      success: function(response) {
+          $('#myTable').html(response.html);  // Mise à jour du contenu des réquisitions
+          $('#pagination-links').html(response.pagination);  // Mise à jour de la pagination
+      },
+      error: function() {
+          alert('Une erreur s\'est produite lors de la récupération des données.');
+      }
+  });
+}
+
+
+
+$(document).on('click', '#paginationLinks a', function(event) {
+  console.log('hereeeeeeee');
+  event.preventDefault();  // Empêche le comportement par défaut du lien de pagination
+  let page = $(this).attr('href').split('page=')[1];  // Récupère la page à partir de l'URL
+  console.log(page);
+  fetchRequisitionsAvance(page);  // Appel pour récupérer les réquisitions filtrées
+});
+
+function fetchRequisitionsAvance(page) {
+  $.ajax({
+      url: `/requisitionsAvance?page=${page}`,  // URL de la pagination de la recherche avancée
+      type: 'GET',
+      success: function(response) {
+          console.log(response);
+          $('#requisitionsTableBody').html(response.html);  // Mise à jour du contenu pour la recherche avancée
+          $('#paginationLinks').html(response.pagination);  // Mise à jour de la pagination pour la recherche avancée
+      },
+      error: function() {
+          alert('Une erreur s\'est produite lors de la récupération des données.');
+      }
+  });
+}
