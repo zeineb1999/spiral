@@ -17,7 +17,7 @@
                 
                 <a href="javascript:void(0)" onclick="openPopup('{{url('pve', ['id' => $requisition->NoReq]) }}')">
                     <i class="bi bi-clipboard2-check-fill"></i>
-                </a><br>
+                </a>
 
                 <script>
                     function openPopup(url) {
@@ -29,30 +29,18 @@
                 <i class="bi bi-dash-lg"></i><br>
             @endif
 
-            @if (file_exists(public_path("files/{$requisition->NoReq}/pdf/rapport_expertise.pdf")))
-                <a href="{{ asset("files/{$requisition->NoReq}/pdf/rapport_expertise.pdf") }}" target="_blank">
-                    <i class="bi bi-file-earmark-pdf"></i>
-                </a>
-            @else
-                <i class="bi bi-dash-lg"></i>
-            @endif
+           
         </td>
         <td class="text-center">
             @if ($requisition->DateEtabli && session('username') == $requisition->CodeComp . $requisition->CodeClient) <!-- Remplacez avec la colonne de votre base -->
                 <a href="javascript:void(0)" onclick="popup('facture_g_imp.php?q={{ $requisition->NoReq }}')">
                     <i class="bi bi-clipboard2-check-fill"></i>
-                </a><br>
+                </a>
             @else
                 <i class="bi bi-dash-lg"></i><br>
             @endif
 
-            @if (file_exists(public_path("files/{$requisition->NoReq}/pdf/facture.pdf")))
-                <a href="{{ asset("files/{$requisition->NoReq}/pdf/facture.pdf") }}" target="_blank">
-                    <i class="bi bi-file-earmark-pdf"></i>
-                </a>
-            @else
-                <i class="bi bi-dash-lg"></i>
-            @endif
+            
         </td>
 
     </tr>

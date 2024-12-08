@@ -1283,7 +1283,8 @@
     <div class="d-flex flex-column">
 
       <div class="profile">
-        <img src="images/clients/caar.jpg" alt="caat" >
+        <img src="{{ asset('images/logo/logo/' . strtolower(session('compagnie')) . '.jpg') }}" alt="{{ strtolower(session('compagnie')) }}">
+        
         
         <h4 class="text-light">{{ session('compagnie') }} {{ session('agence') }}</h4>
         <h1 class="text-light"><a href="index.html">{{ session('designation') }}</a></h1>
@@ -1327,11 +1328,11 @@
     <div class="hero-container" data-aos="fade-in">
       <h1>EXAL SPA</h1>
       <p>Expertise <span class="typed" data-typed-items="Automobile, Industrie et batiment, Transport et maritime, Évaluation, Réforme"></span></p>
-      <!-- Liens vers les sections -->
+      <!-- Liens vers les sections
       
       <a href="#centres" class="hero-link">Nos centres</a>
       <a href="#experts" class="hero-link">Nos experts</a>
-      
+       -->
     </div>
   </section><!-- End Hero -->
      <!-- ======= Contenu ======= -->
@@ -1410,7 +1411,7 @@
         <div class="section-title">
           <h2>Liste des réquisitions enregistrées </h2>
         </div>
-        <p class="text-end"><a href="search_requisition.php?branche=2"><i class="bi bi-search"></i> Essayer la recherche avancée</a></p>
+        <!--<p class="text-end"><a href="search_requisition.php?branche=2"><i class="bi bi-search"></i> Essayer la recherche avancée</a></p>-->
         <div class="input-group mb-2">
           <div class="input-group-prepend">
             <span class="input-group-text font-weight-bold">Structure : </span>
@@ -1454,7 +1455,7 @@
                 
                 <th>Centre</th>
                 <th>N° Rapport</th>
-                <th>Date</th>
+                <th>Date enr.</th>
                 <th>Affaire</th>
                 <th>N° police</th>
                 <th>N° sinitre</th>
@@ -1515,7 +1516,11 @@
                                 <label for="Immatricule" class="form-label">Immatricule</label>
                                 <input type="text" class="form-control" id="Immatricule" name="Immatricule" placeholder="ex : #####-###-##">
                             </div>
-                            
+                            <!-- N police -->
+                            <div class="col-md-6 col-lg-4">
+                                <label for="police" class="form-label">N° police</label>
+                                <input type="text" class="form-control" id="police" name="police" placeholder="N° police">
+                            </div>
                             <!-- N sinistre -->
                             <div class="col-md-6 col-lg-4">
                                 <label for="sinistre" class="form-label">N° sinistre</label>
@@ -1549,7 +1554,8 @@
 
                             <!-- Boutons -->
                             <div class="col-12 text-center mt-3">
-                                <button type="reset" class="btn btn-outline-secondary me-2">Réinitialiser</button>
+                                {{-- <button type="reset" class="btn btn-outline-secondary me-2">Réinitialiser</button> --}}
+
                                 <button type="submit" class="btn btn-primary">Rechercher</button>
                             </div>
                         </div>
@@ -1559,7 +1565,7 @@
         </div>
 
     
-      </section><!-- End Facts Section -->
+      </section><!-- End Facts Section 
       <section id="advancedSearchResults" class="mt-4" style="display:none;">
         <div class="container">
             <div class="section-title">
@@ -1568,7 +1574,7 @@
 
             <div id="searchResults">
                 <div class="row">
-                    <!-- Résultats de recherche ici -->
+                   
                 </div>
                 <div id="requisitionsResults" class="table-responsive mt-4">
                     <table class="table table-striped table-hover table-bordered table-sm">
@@ -1587,7 +1593,7 @@
                             </tr>
                         </thead>
                         <tbody id="requisitionsTableBody">
-                            <!-- Requisitions correspondantes ici -->
+                            
                         </tbody>
                     </table>
                     <div id="paginationLinks">
@@ -1601,7 +1607,7 @@
             </div>
         </div>
       </section>
-
+    -->
     </section><!-- End Services Section -->
 
    
@@ -1919,7 +1925,7 @@
         </form>
       </div>
     </section>
-    <section id="centres" class="centres section-bg">
+    {{-- <section id="centres" class="centres section-bg">
       <div class="container">
         <div class="section-title">
           <h2>Nos centres</h2>
@@ -1934,7 +1940,7 @@
           <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
         </div>
       </div>
-    </section>
+    </section> --}}
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->

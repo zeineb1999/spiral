@@ -315,6 +315,7 @@ $(document).ready(function () {
               // Mettre à jour uniquement le tableau
              
               $('#myTable').html(response.html);
+              console.log('ajax filtre');
               $('#pagination-links').html(response.pagination);
           },
           error: function () {
@@ -357,11 +358,15 @@ $(document).ready(function () {
           success: function (response) {
             //console.log('Réponse reçue :', response); // Vérifiez le contenu complet de la réponse
             if (response.html.trim()) {
-                $('#recherche').hide();
-                $('#advancedSearchResults').show();
-                $('#requisitionsTableBody').html(response.html); // Insérer les lignes
-                $('#paginationLinks').html(response.pagination); // Insérer la pagination
+                //$('#recherche').hide();
+                //$('#advancedSearchResults').show();
+                $('#myTable').html(response.html); // Insérer les lignes
+                console.log('ajax avance');
+                $('#pagination-links').html(response.pagination); // Insérer la pagination
                 //console.log('Lignes insérées :', $('#requisitionsTableBody').html());
+                $('html, body').animate({
+                    scrollTop: $('#services').offset().top
+                }, 1000); // 1000ms pour l'animation de défilement
             } else {
                 alert('Aucun résultat trouvé.');
             }
@@ -384,6 +389,7 @@ $(document).ready(function () {
 
 
 $(document).on('click', '#pagination-links a', function(event) {
+  console.log('rana cliquina page pagination');
   event.preventDefault();  // Empêche le comportement par défaut du lien de pagination
   let page = $(this).attr('href').split('page=')[1];  // Récupère la page à partir de l'URL
   fetchRequisitions(page);  // Appel pour récupérer les réquisitions de cette page
@@ -394,6 +400,7 @@ function fetchRequisitions(page) {
       url: `/requisitions?page=${page}`,  // URL de la pagination des réquisitions
       type: 'GET',
       success: function(response) {
+        console.log('ajax nrml',response);
           $('#myTable').html(response.html);  // Mise à jour du contenu des réquisitions
           $('#pagination-links').html(response.pagination);  // Mise à jour de la pagination
       },
@@ -403,9 +410,9 @@ function fetchRequisitions(page) {
   });
 }
 
+/*
 
-
-$(document).on('click', '#paginationLinks a', function(event) {
+$(document).on('click', '#pagination-links a', function(event) {
   console.log('hereeeeeeee');
   event.preventDefault();  // Empêche le comportement par défaut du lien de pagination
   let page = $(this).attr('href').split('page=')[1];  // Récupère la page à partir de l'URL
@@ -419,11 +426,12 @@ function fetchRequisitionsAvance(page) {
       type: 'GET',
       success: function(response) {
           console.log(response);
-          $('#requisitionsTableBody').html(response.html);  // Mise à jour du contenu pour la recherche avancée
-          $('#paginationLinks').html(response.pagination);  // Mise à jour de la pagination pour la recherche avancée
+          $('#rmyTable').html(response.html);  // Mise à jour du contenu pour la recherche avancée
+          $('#pagination-links').html(response.pagination);  // Mise à jour de la pagination pour la recherche avancée
       },
       error: function() {
           alert('Une erreur s\'est produite lors de la récupération des données.');
       }
   });
 }
+*/
