@@ -137,95 +137,108 @@ class RequisitionController extends Controller
         }
 
         if ($request->filled('dateSinistre')) {
-            $query->whereDate('r.DateSinistre', '>=', $request->dateSinistre);
+            $query->whereDate('r.DateSinistre', '=', $request->dateSinistre);
+        }
+        if (session()->has('sinistre')) {
+            $query->where('r.NoSinistre', 'LIKE', '%' . session('sinistre') . '%');
+        }
+        if (session()->has('police')) {
+            $query->where('r.NoPolice', 'LIKE', '%' . session('police') . '%');
+        }
+        if (session()->has('Immatricule')) {
+            $query->where('r.NoImmatricule', 'LIKE', '%' . session('Immatricule') . '%');
+        }
+        if (session()->has('Limite')) {
+            $Limite = session('Limite');
+            if (in_array($Limite, [10, 20, 50, 100])) {
+                $requisitions = $query->limit($Limite)->get(); // Récupère un nombre limité de résultats
+            } else {
+                $requisitions = $query->paginate(10); // Pagination par défaut si la limite est incorrecte
+            }
+        } else {
+            $requisitions = $query->paginate(10); // Pagination par défaut si aucune limite n'est définie
         }
         $query->orderBy('r.Structure', 'asc')
             ->orderBy('r.Exercice', 'desc')
             ->orderBy('r.Branche', 'desc')
             ->orderBy('r.NoReq', 'desc');
         // Pagination
-        $requisitions = $query->paginate(10);
+        //$requisitions = $query->paginate(10);
         
         //dd($requisitions);
         return response()->json([
             'html' => view('requisitions', compact('requisitions'))->render(),
-            'pagination' => (string) $requisitions->links(), // Générer les liens de pagination
+            'pagination' => method_exists($requisitions, 'links') ? (string) $requisitions->links() : '', // Générer les liens de pagination si applicable
         ]);
     }
 
 
     public function paginate(Request $request)
-    {   
+    {
         $query = DB::table('requisition as r')
             ->join('employe as e', 'r.Expert', '=', 'e.IdEmploye')
             ->join('structure as s', 'r.Structure', '=', 's.Code')
             ->where('r.CodeComp', session('compagnie'))
             ->whereNull('r.Annulation')
             ->where('r.CodeClient', session('agence'));
+
+        // Ajout des conditions basées sur les variables de session
         if (session()->has('structure')) {
-            // La variable de session 'structure' existe et n'est pas nulle
-            $structure = session('structure');
-            $query->where('r.Structure', $structure);
+            $query->where('r.Structure', session('structure'));
         }
-            
-        
         if (session()->has('branche')) {
-            $branche = session('branche');
-            $query->where('r.Branche', $branche);
-        }
-        else {
+            $query->where('r.Branche', session('branche'));
+        } else {
             $query->where('r.Branche', 1);
         }
         if (session()->has('date1')) {
-            $date1 = session('date1');
-            $query->where('r.DateEnreg', '>=',  $date1);
+            $query->where('r.DateEnreg', '>=', session('date1'));
         }
         if (session()->has('date2')) {
-            $date2 = session('date2');
-            $query->where('r.DateEnreg', '<=',  $date2);
+            $query->where('r.DateEnreg', '<=', session('date2'));
         }
         if (session()->has('assure')) {
-            $assure = session('assure');
-            $query->where('r.Assure', 'LIKE', '%' . $assure . '%');
+            $query->where('r.Assure', 'LIKE', '%' . session('assure') . '%');
         }
         if (session()->has('dateSinistre')) {
-            $dateSinistre = session('dateSinistre');
-            $query->whereDate('r.DateSinistre', '=', $dateSinistre);
+            $query->whereDate('r.DateSinistre', '=', session('dateSinistre'));
         }
         if (session()->has('sinistre')) {
-            $sinistre = session('sinistre');
-            $query->where('r.NoSinistre', 'LIKE', '%' . $sinistre . '%');
+            $query->where('r.NoSinistre', 'LIKE', '%' . session('sinistre') . '%');
         }
         if (session()->has('police')) {
-            $police = session('police');
-            $query->where('r.NoPolice', 'LIKE', '%' . $police . '%');
+            $query->where('r.NoPolice', 'LIKE', '%' . session('police') . '%');
         }
         if (session()->has('Immatricule')) {
-            $Immatricule = session('Immatricule');
-            $query->where('r.NoImmatricule', 'LIKE', '%' . $Immatricule . '%');
+            $query->where('r.NoImmatricule', 'LIKE', '%' . session('Immatricule') . '%');
         }
-        if (session()->has('Ordre')) {
-            $Ordre = session('Ordre');
-            
-        }
+
+        // Appliquer la limite ou la pagination
+        $requisitions = null;
         if (session()->has('Limite')) {
             $Limite = session('Limite');
-           
+            if (in_array($Limite, [10, 20, 50, 100])) {
+                $requisitions = $query->limit($Limite)->get(); // Récupère un nombre limité de résultats
+            } else {
+                $requisitions = $query->paginate(10); // Pagination par défaut si la limite est incorrecte
+            }
+        } else {
+            $requisitions = $query->paginate(10); // Pagination par défaut si aucune limite n'est définie
         }
+
+        // Tri des résultats
         $query->orderBy('r.Structure', 'asc')
-                    ->orderBy('r.Exercice', 'desc')
-                    ->orderBy('r.Branche', 'desc')
-                    ->orderBy('r.NoReq', 'desc');
+            ->orderBy('r.Exercice', 'desc')
+            ->orderBy('r.Branche', 'desc')
+            ->orderBy('r.NoReq', 'desc');
 
-        // Récupérer les résultats paginés
-        $requisitions = $query->paginate(10);
-
-        // Retourner la réponse AJAX avec les résultats et la pagination
+        // Retourner la réponse en JSON
         return response()->json([
             'html' => view('requisitions', compact('requisitions'))->render(),
-            'pagination' => (string) $requisitions->links(), // Générer les liens de pagination
+            'pagination' => method_exists($requisitions, 'links') ? (string) $requisitions->links() : '', // Générer les liens de pagination si applicable
         ]);
     }
+
     /*public function fetchRequisitions(Request $request)
     {
         $requisitions = DB::table('requisition as r')

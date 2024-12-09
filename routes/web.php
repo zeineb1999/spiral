@@ -25,4 +25,4 @@ Route::get('/requisitions/filter', [RequisitionController::class, 'filter'])->na
 Route::get('/requisitions/advanced-search', [RequisitionController::class, 'advancedSearch'])->name('requisitions.advancedSearch');
 Route::get('/requisitions', [RequisitionController::class, 'paginate'])->name('requisitions.paginate');
 Route::get('/requisitionsAvance', [RequisitionController::class, 'advancedSearch'])->name('requisitions.advancedSearch');
-Route::get('/pve/{id}', [PveController::class, 'show'])->name('pve');
+Route::get('/pve', [PveController::class, 'show'])->name('pve');

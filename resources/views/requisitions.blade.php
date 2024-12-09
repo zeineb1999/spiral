@@ -15,15 +15,12 @@
         <td class="text-center">
             @if ($requisition->DateEtabli && session('username') == $requisition->CodeComp . $requisition->CodeClient)<!-- Remplacez avec la colonne de votre base -->
                 
-                <a href="javascript:void(0)" onclick="openPopup('{{url('pve', ['id' => $requisition->NoReq]) }}')">
-                    <i class="bi bi-clipboard2-check-fill"></i>
-                </a>
+            <a href="{{ route('pve', ['id' => $requisition->NoReq, 'structure' => $requisition->Structure, 'exercice' => $requisition->Exercice, 'branche' => $requisition->Branche]) }}" target="_blank">
+                <i class="bi bi-clipboard2-check-fill"></i>
+            </a>
 
-                <script>
-                    function openPopup(url) {
-                        window.open(url, '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
-                    }
-                </script>
+
+                
 
             @else
                 <i class="bi bi-dash-lg"></i><br>
