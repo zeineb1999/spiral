@@ -47,7 +47,7 @@
   <meta name="author" content="Oualid SAOULI" />
   <meta name="copyright" content="Oualid SAOULI" />
   <link rel="icon" type="image/png" href="./img/logomini.png" />
-  <title>Spiral :: Facture d'honoraire</title>
+  <title>Exal :: Facture d'honoraire</title>
   <style>
     body {
       font-family: tahoma, arial, sans-serif;
@@ -136,13 +136,15 @@
   <div>
     <div>          
       <table>
+        
+       
         <tr>
             <td class="noborder center" colspan="4">
-            <img src=" public_path('images/header_pdf.png') " > 
-
-                <img src="{{ $header }}" title="Entête EXAL" alt="EXAL SPA"/>
+                <img src="data:image/png;base64,{{ $header }}" title="Entête EXAL" alt="EXAL SPA" />
             </td>
         </tr>
+
+        
         <tr>
           <td class="fisc" colspan="4" style="font-size: 8pt;">  R.C. : {{ $entete->RC }} - Matr. Fisc. : {{ $entete->MatrFisc }} - N° Art. : {{ $entete->NArt }} - R.I.B. {{ $entete->Banque }} : {{ $entete->RIB }}
           </td>  
@@ -324,7 +326,7 @@
             <td class="title left right">En lettres :</td>
           </tr>
           <tr>
-            <td style="font-size: 10pt;"><strong></strong></td>
+            <td style="font-size: 10pt;"><strong>{{ $totalTTCEnLettre }}</strong></td>
           </tr>
       </table>
     </div>
@@ -339,10 +341,27 @@
             </td> 
             <td  class="noborder sign" style="width: 60%; text-align: center; vertical-align: text-top; text-decoration: underline; font-weight: bold; font-size: 12pt;">
               <p>L'EXPERT</p>
-             
+              @php
+                  // Encodage du Cachet rond
+                  $cachet = base64_encode(file_get_contents("images/signatures/cachet_rond_without_bg.png"));
+                  $griffe = base64_encode(file_get_contents("images/signatures/{$expert->IdEmploye}.png"));
+                  $sign = base64_encode(file_get_contents("images/signatures/{$expert->Signature}.png"));
+              @endphp
+
+              <img style="z-index:1;" class="cachet_rond" src="data:image/png;base64,{{ $cachet }}" alt="Cachet rond" width="150" height="150">
+              <img style="z-index:0;" class="cachet" src="data:image/png;base64,{{ $griffe }}" alt="Cachet de l'expert" width="200" height="100">
+              <img style="z-index:2;" class="cachet" src="data:image/png;base64,{{ $sign }}" alt="Signature" width="250" height="130">
+
             </td>
             <td  class="noborder" style="width: 20%; text-align: right;">
-                
+           
+            @if(isset($fact->noFact))
+              @php
+                  $qrLink = "https://api.qrserver.com/v1/create-qr-code/?data=www.exal.dz/spiral/facture_g_imp.php?q=" . $fact->noFact . "&size=80x80";
+                  $qr = base64_encode(file_get_contents($qrLink));
+              @endphp
+              <img id="qrcode" src="data:image/png;base64,{{ $qr }}" alt="QR Code" width="80" height="80">
+            @endif
             </td>  
           </tr>
       </table>

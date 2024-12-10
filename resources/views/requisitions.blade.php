@@ -15,7 +15,7 @@
         <td class="text-center">
             @if ($requisition->DateEtabli && session('username') == $requisition->CodeComp . $requisition->CodeClient)<!-- Remplacez avec la colonne de votre base -->
                 
-            <a href="{{ route('pve', ['id' => $requisition->NoReq, 'structure' => $requisition->Structure, 'exercice' => $requisition->Exercice, 'branche' => $requisition->Branche]) }}" target="_blank">
+            <a href="{{ route('rapport', ['id' => $requisition->NoReq, 'structure' => $requisition->Structure, 'exercice' => $requisition->Exercice, 'branche' => $requisition->Branche]) }}" target="_blank">
                 <i class="bi bi-clipboard2-check-fill"></i>
             </a>
 
@@ -30,7 +30,7 @@
         </td>
         <td class="text-center">
             @if ($requisition->DateEtabli && session('username') == $requisition->CodeComp . $requisition->CodeClient) <!-- Remplacez avec la colonne de votre base -->
-                <a href="javascript:void(0)" onclick="popup('facture_g_imp.php?q={{ $requisition->NoReq }}')">
+                <a href="{{ route('pve', ['id' => $requisition->NoReq, 'structure' => $requisition->Structure, 'exercice' => $requisition->Exercice, 'branche' => $requisition->Branche]) }}" target="_blank">
                     <i class="bi bi-clipboard2-check-fill"></i>
                 </a>
             @else
